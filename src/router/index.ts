@@ -1,13 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomePage from "@/pages/HomePage.vue";
+import AuthPage from "@/pages/AuthPage.vue";
 import LoginPage from "@/pages/LoginPage.vue";
 import RegisterPage from "@/pages/RegisterPage.vue";
+import MainPage from "@/pages/MainPage.vue";
 
 const routes = [
   {
-    name: "home",
-    path: "/",
-    component: HomePage,
+    name: "mainPage",
+    path: "/",    
+   // meta: { needsAuth: true },
+    component: MainPage,
+  },
+  {
+    name: "authWindow",
+    path: "/auth",
+    component: AuthPage,
   },
   {
     name: "login",

@@ -1,0 +1,48 @@
+<template>
+<div class='container'>
+  
+    <h3 v-if="typedUser">{{ typedUser.name }}</h3>
+    <h3 v-else>Not logged in</h3>
+  
+    <svg-icon type="mdi" :path="hamIcon"></svg-icon>
+</div>
+</template>
+
+<script setup lang='ts'>
+import type { Ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/stores/auth";
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiMenu } from "@mdi/js";
+
+type User = {
+  name: string;
+};
+
+const store = useAuthStore();
+
+const hamIcon = mdiMenu;
+
+const { isLoggedIn, user } = storeToRefs(store);
+const typedUser = user as Ref<User | null>;
+</script>
+
+<style scoped>
+
+.container {
+  position: fixed;
+  top: 0;
+  background-color: #9ef4ff;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  z-index: 900;
+  padding: 0 0.5rem;
+}
+
+h3 {
+  
+}
+</style>

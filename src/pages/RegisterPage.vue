@@ -23,9 +23,14 @@
         variant="outlined"
         v-model="form.password_confirmation"
       ></v-text-field>
-      <div class="button-register">
+      <div class="buttons display-flex">
         <v-btn variant="elevated" color="warning" @click="handleSubmitRegister"
           >Register</v-btn
+        >
+        <RouterLink :to="{ name: 'authWindow' }">
+          <v-btn variant="elevated" density="compact" color="blue"
+            >Back</v-btn
+          ></RouterLink
         >
       </div>
     </form>
@@ -36,6 +41,7 @@
 import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 interface Form {
   name: string;
@@ -50,6 +56,7 @@ interface Form {
 const store = useAuthStore();
 const { handleRegister } = store;
 const { isLoggedIn } = storeToRefs(store);
+const router = useRouter();
 
 // const typedUser = user as Ref<User | null>;
 
@@ -66,6 +73,7 @@ const form: Form = reactive({
 const handleSubmitRegister = async () => {
   await handleRegister(form);
   if (isLoggedIn.value) {
+    router.push({ name: "mainPage" });
     console.log("Registered");
   }
 };
@@ -122,8 +130,10 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.button-register {
+.buttons {
   margin: 1rem 0;
+  justify-content: space-evenly;
+  width: 260px;
 }
 
 .impRed {

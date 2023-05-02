@@ -16,9 +16,14 @@
         variant="outlined"
         v-model="form.password"
       ></v-text-field>
-      <div class="button-login">
+      <div class="buttons display-flex">
         <v-btn variant="elevated" color="success" @click="handleSubmitLogin"
           >Login</v-btn
+        >
+        <RouterLink :to="{ name: 'authWindow' }">
+          <v-btn variant="elevated" density="compact" color="blue"
+            >Back</v-btn
+          ></RouterLink
         >
       </div>
     </form>
@@ -29,6 +34,7 @@
 import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 interface Form {
   name: string;
@@ -39,6 +45,8 @@ interface Form {
 const store = useAuthStore();
 const { handleLogin } = store;
 const { isLoggedIn } = storeToRefs(store);
+const router = useRouter();
+
 
 const form: Form = reactive({
   name: "",
@@ -49,6 +57,7 @@ const form: Form = reactive({
 const handleSubmitLogin = async () => {
   await handleLogin(form);
   if (isLoggedIn.value) {
+    router.push({name: "mainPage"})
     console.log("logged in");
   } else {
     console.log("NOT logged in");
@@ -81,8 +90,10 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.button-login {
+.buttons {
   margin: 1rem 0;
+  justify-content: space-evenly;
+  width: 260px;
 }
 
 .impRed {

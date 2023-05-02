@@ -4,8 +4,10 @@ import { ref } from "vue";
 
 interface Note {
   id: number;
+  title: string;
   note: string;
   importance: number;
+  created_at: string;
 }
 
 export const useNotesStore = defineStore("notes", () => {
@@ -18,7 +20,8 @@ export const useNotesStore = defineStore("notes", () => {
       const fetchedNotes: Note[] = data.data;
       allNotes.value = fetchedNotes;
 
-      console.log(allNotes.value);
+      console.log(allNotes.value);      
+      console.log(data);      
     } catch (error) {
       console.log("CHYBA: ", error);
     }

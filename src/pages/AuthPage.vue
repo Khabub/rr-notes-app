@@ -9,30 +9,12 @@
       <RouterLink :to="{ name: 'register' }">
         <v-btn variant="elevated" color="warning">Register</v-btn></RouterLink
       >
-    </div>
-    <h2 v-if="checkLogin">I am logged in</h2>
-    <h3 v-if="typedUser">{{ typedUser.name }}</h3> 
+    </div>    
   </div>
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
-import { computed, onMounted } from "vue";
-import { useAuthStore } from "@/stores/auth";
-import { storeToRefs } from "pinia";
 
-
-const store = useAuthStore();
-const { fetchUser } = store;
-const { isLoggedIn, user } = storeToRefs(store);
-
-const typedUser = user as Ref<User | null>;
-  
-const checkLogin = computed(() => isLoggedIn.value);
-
-onMounted(async () => {
-  await fetchUser();
-});
 
 </script>
 

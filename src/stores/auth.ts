@@ -11,10 +11,16 @@ export const useAuthStore = defineStore("auth", () => {
   const fetchUser = async () => {
     try {
       const { data } = await getUser();
-      user.value = data;
-      //console.log(data);
+      if (data) {
+        user.value = data;
+        return true;
+      } else {
+        user.value = null;
+        return false;
+      }
     } catch (error) {
       user.value = null;
+      return false;
     }
   };
 
