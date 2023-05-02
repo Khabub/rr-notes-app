@@ -11,9 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PropType } from 'vue';
+import type { PropType } from "vue";
 import { getTime } from "@/utils/getTime";
-
 
 const props = defineProps({
   id: Number as PropType<number>,
@@ -22,8 +21,6 @@ const props = defineProps({
   importance: Number as PropType<number>,
   created_at: String as PropType<string>,
 });
-
-
 
 const importanceCheck = (item: number) => {
   switch (item) {
@@ -43,17 +40,17 @@ const importanceCheck = (item: number) => {
 .container {
   display: flex;
   position: relative;
-  width: 90vw; 
+  width: 90vw;
   max-width: 350px;
   border: 2px solid;
   border-radius: 0.8rem;
   margin-bottom: 1rem;
   box-shadow: 5px 5px 10px 5px grey;
-  padding: 0 1rem;    
+  padding: 0 1rem;
 }
 
 .note-content {
-  overflow: hidden;  
+  overflow: hidden;
   font-size: 0.9rem;
   margin: 0.2rem 0 1.5rem;
 }

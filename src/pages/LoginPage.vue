@@ -47,7 +47,6 @@ const { handleLogin } = store;
 const { isLoggedIn } = storeToRefs(store);
 const router = useRouter();
 
-
 const form: Form = reactive({
   name: "",
   password: "",
@@ -57,7 +56,7 @@ const form: Form = reactive({
 const handleSubmitLogin = async () => {
   await handleLogin(form);
   if (isLoggedIn.value) {
-    router.push({name: "mainPage"})
+    router.push({ name: "mainPage" });
     console.log("logged in");
   } else {
     console.log("NOT logged in");

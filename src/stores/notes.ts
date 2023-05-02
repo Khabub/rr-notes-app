@@ -20,8 +20,8 @@ export const useNotesStore = defineStore("notes", () => {
       const fetchedNotes: Note[] = data.data;
       allNotes.value = fetchedNotes;
 
-      console.log(allNotes.value);      
-      console.log(data);      
+      console.log(allNotes.value);
+      console.log(data);
     } catch (error) {
       console.log("CHYBA: ", error);
     }

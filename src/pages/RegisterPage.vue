@@ -49,26 +49,16 @@ interface Form {
   password_confirmation: string;
 }
 
-/* type User = {
-  name: string;
-}; */
-
 const store = useAuthStore();
 const { handleRegister } = store;
 const { isLoggedIn } = storeToRefs(store);
 const router = useRouter();
-
-// const typedUser = user as Ref<User | null>;
 
 const form: Form = reactive({
   name: "",
   password: "",
   password_confirmation: "",
 });
-
-// const showNotes = ref<boolean>(false);
-
-// const checkLogin = computed(() => isLoggedIn.value);
 
 const handleSubmitRegister = async () => {
   await handleRegister(form);
@@ -77,32 +67,6 @@ const handleSubmitRegister = async () => {
     console.log("Registered");
   }
 };
-
-/* const handleSubmitLogout = async () => {
-  await handleLogout();
-  showNotes.value = false;
-  console.log("Logged Out");
-};
-
-const handleGetAllNotes = async () => {
-  if (isLoggedIn.value) {
-    await allNotesHandler();
-    showNotes.value = true;
-  }
-}; */
-
-/* const importanceCheck = (item: number) => {
-  switch (item) {
-    case 1:
-      return "impRed";
-    case 2:
-      return "impOrange";
-    case 3:
-      return "impGreen";
-    default:
-      break;
-  }
-}; */
 </script>
 
 <style scoped>

@@ -9,14 +9,9 @@
       <RouterLink :to="{ name: 'register' }">
         <v-btn variant="elevated" color="warning">Register</v-btn></RouterLink
       >
-    </div>    
+    </div>
   </div>
 </template>
-
-<script setup lang="ts">
-
-
-</script>
 
 <style scoped>
 .container {
@@ -33,7 +28,7 @@
 
 .buttons {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   align-items: center;
   gap: 2rem;
   padding: 3rem;
