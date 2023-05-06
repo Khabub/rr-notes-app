@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { getAllNotes } from "@/http/notes-api";
 import { ref } from "vue";
 
-interface Note {
+export interface Note {
   id: number;
   title: string;
   note: string;
@@ -12,6 +12,7 @@ interface Note {
 
 export const useNotesStore = defineStore("notes", () => {
   const allNotes = ref<Note[]>([]);
+  const textabove = ref<boolean>(true);
 
   const allNotesHandler = async () => {
     try {
@@ -30,5 +31,6 @@ export const useNotesStore = defineStore("notes", () => {
   return {
     allNotesHandler,
     allNotes,
+    textabove
   };
 });

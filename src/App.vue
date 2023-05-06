@@ -2,6 +2,7 @@
   <NavBar />
   <RouterView> </RouterView>
   <v-btn
+    v-if="isLoggedIn"
     class="plusButton"
     icon="mdi-plus"
     color="blue"
@@ -14,6 +15,11 @@
 <script setup lang="ts">
 import "@fontsource/roboto";
 import NavBar from "./components/NavBar.vue";
+import { useAuthStore } from "@/stores/auth";
+import { storeToRefs } from "pinia";
+
+const store = useAuthStore();
+const { isLoggedIn } = storeToRefs(store);
 </script>
 
 <style scoped>

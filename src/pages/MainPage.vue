@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <div class="headline">
+    <div v-if="textabove" class="headline">
       <h1>Your saved notes</h1>
       <p>(click on a note for details)</p>
     </div>
+    <div v-else class="without-heading"></div>
     <div v-if="checkLogin" class="container">
       <div v-for="(item, index) in allNotes" :key="index">
         <TheNote
@@ -14,15 +15,12 @@
           :importance="item.importance"
         />
       </div>
-      <v-btn variant="elevated" color="error" @click="handleSubmitLogout"
-        >Logout</v-btn
-      >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useNotesStore } from "@/stores/notes";
@@ -31,21 +29,14 @@ import TheNote from "@/components/UI/TheNote.vue";
 
 const store = useAuthStore();
 const storeNotes = useNotesStore();
-const { fetchUser, handleLogout } = store;
+const { fetchUser } = store;
 const { isLoggedIn } = storeToRefs(store);
 const router = useRouter();
-const showNotes = ref<boolean>(false);
+
 const { allNotesHandler } = storeNotes;
-const { allNotes } = storeToRefs(storeNotes);
+const { allNotes, textabove } = storeToRefs(storeNotes);
 
 const checkLogin = computed(() => isLoggedIn.value);
-
-const handleSubmitLogout = async () => {
-  await handleLogout();
-  showNotes.value = false;
-  console.log("Logged Out");
-  router.push({ name: "authWindow" });
-};
 
 onMounted(async () => {
   try {
@@ -77,5 +68,8 @@ onMounted(async () => {
   margin-top: 3rem;
   line-height: 2rem;
   padding: 0.5rem;
+}
+.without-heading {
+  margin-top: 3rem;
 }
 </style>
