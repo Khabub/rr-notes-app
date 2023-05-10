@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import { getAllNotes } from "@/http/notes-api";
+import { getAllNotes, createNote } from "@/http/notes-api";
 import { ref } from "vue";
 
 export interface Note {
-  id: number;
+  id?: number;
   title: string;
   note: string;
-  importance: number;
-  created_at: string;
+  importance: string;
+  created_at?: string;
 }
 
 export const useNotesStore = defineStore("notes", () => {
@@ -20,7 +20,7 @@ export const useNotesStore = defineStore("notes", () => {
 
       const fetchedNotes: Note[] = data.data;
       allNotes.value = fetchedNotes;
-
+      allNotes.value.reverse();
       console.log(allNotes.value);
       console.log(data);
     } catch (error) {
@@ -28,9 +28,15 @@ export const useNotesStore = defineStore("notes", () => {
     }
   };
 
+  const handleCreateNote = async (value: Note) => {    
+    const { data: createdNote } = await createNote(value);
+    allNotes.value.unshift(createdNote.data);
+  };
+
   return {
     allNotesHandler,
     allNotes,
-    textabove
+    textabove,
+    handleCreateNote,
   };
 });

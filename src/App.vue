@@ -1,15 +1,22 @@
 <template>
-  <NavBar />
-  <RouterView> </RouterView>
-  <v-btn
-    v-if="isLoggedIn"
-    class="plusButton"
-    icon="mdi-plus"
-    color="blue"
-    size="large"
-    style="font-size: 2rem"
-    >+</v-btn
-  >
+  <div>
+    <NavBar />
+    <RouterView v-slot="{ Component }" :showInputState="showInputState">
+      <transition name="trans">
+        <component :is="Component" />
+      </transition>
+    </RouterView>
+    <v-btn
+      v-if="plusButton"
+      class="plusButton"
+      icon="mdi-plus"
+      color="blue"
+      size="large"
+      style="font-size: 2rem"
+      @click="showInputForm"
+      >+</v-btn
+    >
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -19,13 +26,29 @@ import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 
 const store = useAuthStore();
-const { isLoggedIn } = storeToRefs(store);
+const { plusButton, showInputState } = storeToRefs(store);
+
+const showInputForm = () => {
+  showInputState.value = !showInputState.value;
+  plusButton.value = false;
+};
 </script>
 
 <style scoped>
+
 .plusButton {
   position: absolute;
   right: 30px;
   bottom: 30px;
+}
+
+.trans-enter-from {
+  opacity: 0;
+}
+.trans-enter-active {
+  transition: opacity 0.5s ease-in;
+}
+.trans-enter-to {
+  opacity: 1;
 }
 </style>

@@ -1,24 +1,25 @@
 <template>
-  <v-layout>
+  <v-layout >
     <div class="container">
+      
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
       <h3 v-else>Not logged in</h3>
       <svg-icon type="mdi" :path="hamIcon" @click="handleNavMenu"></svg-icon>
       <v-navigation-drawer
-        style="background-color: #b3b3da"
+        style="background-color: #b3b3da"        
         v-model="drawer"
         location="left"
         width="200"
-        temporary
+        temporary                         
       >
         <TheHeading />
-      </v-navigation-drawer>
-    </div>
+      </v-navigation-drawer>      
+    </div>    
   </v-layout>
 </template>
 
 <script setup lang="ts">
-import type { Ref } from "vue";
+import type {Ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth";
 import SvgIcon from "@jamescoyle/vue-icon";
@@ -35,11 +36,13 @@ const hamIcon = mdiMenu;
 const drawer = ref<boolean>(false);
 
 const { user } = storeToRefs(store);
-const typedUser = user as Ref<User | null>;
+const typedUser = user as Ref<User | null>;  
 
+  
 const handleNavMenu = () => {
-  drawer.value = !drawer.value;
+  drawer.value = !drawer.value; 
 };
+
 </script>
 
 <style scoped>

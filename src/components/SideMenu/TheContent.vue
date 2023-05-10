@@ -8,6 +8,7 @@
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
       <h3 v-else>Not logged in</h3>
       <v-btn
+        v-if="isLoggedIn"
         class="logout-class"
         variant="elevated"
         density="compact"
@@ -16,11 +17,18 @@
         >Logout</v-btn
       >
       <hr style="border-top: 3px solid grey; width: 110%; margin-top: 1rem" />
-      <div class="textabove">
+      <div v-if="isLoggedIn" class="textabove">
         <h4>Text above notes</h4>
         <v-switch v-model="textabove" color="primary" hide-details></v-switch>
       </div>
-      <div class="savenotes">
+      <div v-if="isLoggedIn" class="textabove">
+        <h4>Set language</h4>
+        <v-radio-group class="radio-label" v-model="radios">
+          <v-radio label="ENG" color="primary" value="eng"></v-radio>
+          <v-radio label="CZE" color="primary" value="cze"></v-radio>
+        </v-radio-group>
+      </div>
+      <div v-if="isLoggedIn" class="savenotes">
         <h4>Save notes to a file (.json)</h4>
         <v-btn
           class="logout-class"
@@ -56,13 +64,18 @@ const { handleLogout } = store;
 const router = useRouter();
 const storeNotes = useNotesStore();
 const { textabove, allNotes } = storeToRefs(storeNotes);
-const { user } = storeToRefs(store);
+const { user, isLoggedIn, plusButton } = storeToRefs(store);
 
 const typedUser = user as Ref<User | null>;
+
+const radios = ref("eng");
+
+console.log(radios);
 
 const handleSubmitLogout = async () => {
   await handleLogout();
   showNotes.value = false;
+  plusButton.value = false;
   console.log("Logged Out");
   router.push({ name: "authWindow" });
 };
@@ -91,17 +104,27 @@ const handleSubmitLogout = async () => {
   flex-direction: column;
   align-items: center;
   border: 1px solid grey;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   border-radius: 1rem;
   margin: 0.9rem;
+}
+
+.savenotes {
+  padding-bottom: 1rem;
 }
 
 h2 {
   padding: 0.5rem;
 }
+h3 {
+  font-size: 0.9rem;
+}
 
 h4 {
   font-weight: 400;
   text-align: center;
+}
+.radio-label {
+  font-weight: 700;
 }
 </style>

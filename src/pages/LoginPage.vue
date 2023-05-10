@@ -11,6 +11,8 @@
       ></v-text-field>
       <v-text-field
         class="input"
+        type="password"
+        @keydown.enter="handleSubmitLogin"
         label="Password"
         density="compact"
         variant="outlined"
@@ -35,6 +37,7 @@ import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useNotesStore } from "@/stores/notes";
 
 interface Form {
   name: string;
@@ -44,8 +47,10 @@ interface Form {
 
 const store = useAuthStore();
 const { handleLogin } = store;
-const { isLoggedIn } = storeToRefs(store);
+const { isLoggedIn, plusButton, showInputState } = storeToRefs(store);
 const router = useRouter();
+const storeNotes = useNotesStore();
+const { allNotes } = storeToRefs(storeNotes);
 
 const form: Form = reactive({
   name: "",
@@ -56,7 +61,10 @@ const form: Form = reactive({
 const handleSubmitLogin = async () => {
   await handleLogin(form);
   if (isLoggedIn.value) {
+    allNotes.value = [];
     router.push({ name: "mainPage" });
+    showInputState.value = false;
+    plusButton.value = true;
     console.log("logged in");
   } else {
     console.log("NOT logged in");

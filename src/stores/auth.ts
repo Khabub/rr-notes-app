@@ -5,6 +5,8 @@ import { computed, ref } from "vue";
 export const useAuthStore = defineStore("auth", () => {
   const user = ref(null);
   const errors = ref({});
+  const plusButton = ref<boolean>(false);
+  const showInputState = ref<boolean>(false);
 
   const isLoggedIn = computed(() => !!user.value);
 
@@ -66,5 +68,7 @@ export const useAuthStore = defineStore("auth", () => {
     fetchUser,
     user,
     isLoggedIn,
+    plusButton,
+    showInputState
   };
 });

@@ -12,6 +12,7 @@
       <v-text-field
         class="input"
         label="Password"
+        type="password"
         density="compact"
         variant="outlined"
         v-model="form.password"
@@ -19,6 +20,7 @@
       <v-text-field
         class="input"
         label="Password Confirm"
+        type="password"
         density="compact"
         variant="outlined"
         v-model="form.password_confirmation"
