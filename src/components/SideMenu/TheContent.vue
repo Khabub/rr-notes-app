@@ -24,8 +24,8 @@
       <div class="textabove">
         <h4>{{ setLang.theContent.h4_1 }}</h4>
         <v-radio-group class="radio-label" v-model="radios">
-          <v-radio label="ENG" color="primary" value="eng"></v-radio>
-          <v-radio label="CZE" color="primary" value="cze"></v-radio>
+          <v-radio label="ENG" color="primary" value="english"></v-radio>
+          <v-radio label="CZE" color="primary" value="czech"></v-radio>
         </v-radio-group>
       </div>
       <div v-if="isLoggedIn" class="savenotes">
@@ -68,11 +68,11 @@ const { user, isLoggedIn, plusButton } = storeToRefs(store);
 
 const typedUser = user as Ref<User | null>;
 
+// logout
 const handleSubmitLogout = async () => {
   await handleLogout();
   showNotes.value = false;
   plusButton.value = false;
-  console.log("Logged Out");
   router.push({ name: "authWindow" });
 };
 </script>

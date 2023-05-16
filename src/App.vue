@@ -33,6 +33,7 @@ import TheSnackbar from "./components/UI/TheSnackbar.vue";
 const store = useAuthStore();
 const { plusButton, showInputState } = storeToRefs(store);
 
+// open window for inserting a note after clicking plus button
 const showEnterForm = () => {
   showInputState.value.enterNote = !showInputState.value.enterNote;
   plusButton.value = false;

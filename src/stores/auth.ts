@@ -18,6 +18,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   const isLoggedIn = computed(() => !!user.value);
 
+  // get user from database
   const fetchUser = async () => {
     try {
       const { data } = await getUser();
@@ -34,6 +35,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  // handle user login, check csrfCookie, if the user exist and get him if exist
   const handleLogin = async (credentials: any) => {
     await csrfCookie();
     try {
@@ -47,6 +49,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  // handle user register and log him in
   const handleRegister = async (newUser: {
     name: string;
     password: string;
@@ -64,6 +67,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  // logout user
   const handleLogout = async () => {
     await logout();
     user.value = null;

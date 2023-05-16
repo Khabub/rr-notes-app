@@ -32,6 +32,7 @@ export interface LangAll {
   noteDeleted: string;
 }
 
+// components for translate the text
 type LangTypes =
   | "mainPage"
   | "loginPage"
@@ -43,6 +44,7 @@ type LangTypes =
   | "navBar"
   | "authPage";
 
+// english language
 export const engLang: Record<LangTypes, Partial<LangAll>> = {
   mainPage: {
     h1: "Your saved notes",
@@ -101,8 +103,7 @@ export const engLang: Record<LangTypes, Partial<LangAll>> = {
   },
 };
 
-// --------------------------------------------------------------------------------
-
+// czech language
 export const czeLang: Record<LangTypes, Partial<LangAll>> = {
   mainPage: {
     h1: "Vaše uložené poznámky",

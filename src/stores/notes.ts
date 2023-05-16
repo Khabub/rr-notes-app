@@ -5,8 +5,9 @@ import {
   deleteNote,
   updateNote,
 } from "@/http/notes-api";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import { engLang, czeLang } from "@/stores/language";
+import { checkLocale } from "@/utils/checkLocale";
 
 export interface Note {
   id: number;
@@ -16,34 +17,31 @@ export interface Note {
   created_at?: string;
 }
 
-interface Snackbar {
-  open: boolean;
-  color: string;
-  text: string;
-  timeout?: number;
-}
-
 export const useNotesStore = defineStore("notes", () => {
+  // note database
   const allNotes = ref<Note[]>([]);
+
+  // hide/show the text above notes
   const textabove = ref<boolean>(true);
-  const snackbar: Snackbar = reactive({
-    open: false,
-    color: "",
-    text: "",
-    timeout: 2000,
+
+  // set importance radio button
+  const radios = ref("");
+
+  // check if is language set in browser
+  radios.value = checkLocale();
+
+  // change languages
+  const setLang = computed(() => {
+    if (radios.value === "english") {
+      window.localStorage.setItem("rr-notes_v2_lang", "english");
+      return { ...engLang };
+    } else {
+      window.localStorage.setItem("rr-notes_v2_lang", "czech");
+      return { ...czeLang };
+    }
   });
 
-  const getSnackbar = (open: boolean, color: string, text: string): void => {
-    snackbar.open = open;
-    snackbar.color = color;
-    snackbar.text = text;
-  };
-
-  const radios = ref("eng");
-  const setLang = computed(() =>
-    radios.value === "eng" ? { ...engLang } : { ...czeLang }
-  );
-
+  // fetch all notes
   const allNotesHandler = async () => {
     try {
       const { data } = await getAllNotes();
@@ -55,17 +53,20 @@ export const useNotesStore = defineStore("notes", () => {
     }
   };
 
+  // create the note
   const handleCreateNote = async (value: Note) => {
     const { data: createdNote } = await createNote(value);
     allNotes.value.unshift(createdNote.data);
   };
 
+  // delete the note
   const handleDeleteNote = async (id: number) => {
     await deleteNote(id);
     const index = allNotes.value.findIndex((item) => item.id === id);
     allNotes.value.splice(index, 1);
   };
 
+  // update the note
   const handleUpdateNote = async (val: Note) => {
     const { data: updatedNote } = await updateNote(val.id, val);
 
@@ -85,8 +86,6 @@ export const useNotesStore = defineStore("notes", () => {
     handleCreateNote,
     handleDeleteNote,
     handleUpdateNote,
-    getSnackbar,
-    snackbar,
     setLang,
     radios,
   };

@@ -44,7 +44,6 @@ const storeNotes = useNotesStore();
 const { fetchUser } = store;
 const { isLoggedIn, plusButton, showInputState } = storeToRefs(store);
 const router = useRouter();
-
 const { allNotesHandler } = storeNotes;
 const { allNotes, textabove, setLang } = storeToRefs(storeNotes);
 
@@ -55,6 +54,7 @@ const notePropsData: Note = reactive({
   importance: "",
 });
 
+// check if is user logged in
 const checkLogin = computed(() => isLoggedIn.value);
 
 onMounted(async () => {

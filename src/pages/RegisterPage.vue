@@ -70,6 +70,7 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
+// register
 const handleSubmitRegister = async () => {
   await handleRegister(form);
   if (isLoggedIn.value) {

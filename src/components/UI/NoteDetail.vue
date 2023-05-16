@@ -61,20 +61,22 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiClose } from "@mdi/js";
 import { useNotesStore } from "@/stores/notes";
 import { useAuthStore } from "@/stores/auth";
+import { useSnackbar } from "@/stores/snackbar";
 import { storeToRefs } from "pinia";
 import { reactive, ref } from "vue";
 
 const closeIcon = mdiClose;
 const storeNotes = useNotesStore();
 const store = useAuthStore();
+const storeSnackbar = useSnackbar();
 const alertDialog = ref<boolean>(false);
 
-const { handleDeleteNote, getSnackbar } = storeNotes;
+const { handleDeleteNote } = storeNotes;
 const { setLang } = storeToRefs(storeNotes);
 const { plusButton, showInputState } = storeToRefs(store);
+const { getSnackbar } = storeSnackbar;
 
-// udělat ractive a poslat to do MainPage
-
+// props from TheNote
 const props = defineProps({
   id: Number as PropType<number>,
   title: String as PropType<string>,
@@ -84,9 +86,9 @@ const props = defineProps({
 });
 
 const noteDetailsProps = reactive(props);
-
 export type NoteProps = typeof props;
 
+// emits
 const emit = defineEmits<{
   (event: "cancel-crossEmit"): void;
   (event: "note-props", value: NoteProps): void;

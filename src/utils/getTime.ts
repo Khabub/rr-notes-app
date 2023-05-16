@@ -1,3 +1,4 @@
+// set timestamp from database and create format
 export const getTime = (value: string) => {
   const temp = new Date(Date.parse(value));
 

@@ -1,3 +1,4 @@
+// save database to .json file
 import type { Note } from "@/stores/notes";
 
 export const saveToFile = (notes: Note[]) => {

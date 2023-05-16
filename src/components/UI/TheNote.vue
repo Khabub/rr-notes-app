@@ -31,6 +31,7 @@ import NoteDetail, { type NoteProps } from "./NoteDetail.vue";
 
 const noteDetailShow = ref<boolean>(false);
 
+// props from MainWindow
 const props = defineProps({
   id: Number as PropType<number>,
   title: String as PropType<string>,
@@ -39,6 +40,7 @@ const props = defineProps({
   created_at: String as PropType<string>,
 });
 
+// emits
 const emit = defineEmits<{
   (event: "note-props-edit", value: NoteProps): void;
 }>();
@@ -47,10 +49,12 @@ const emitHandle = (data: NoteProps) => {
   emit("note-props-edit", data);
 };
 
+// modal detail note window show/hide
 const handleNoteDetailShow = () => {
   noteDetailShow.value = !noteDetailShow.value;
 };
 
+// check importance of note and set the class
 const importanceCheck = (item: string) => {
   switch (item) {
     case "1":

@@ -62,6 +62,7 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
+// login, redirect
 const handleSubmitLogin = async () => {
   await handleLogin(form);
   if (isLoggedIn.value) {
@@ -69,8 +70,7 @@ const handleSubmitLogin = async () => {
     router.push({ name: "mainPage" });
     showInputState.value.enterNote = false;
     showInputState.value.editNote = false;
-    plusButton.value = true;
-    console.log("logged in");
+    plusButton.value = true;    
   } else {
     console.log("NOT logged in");
   }

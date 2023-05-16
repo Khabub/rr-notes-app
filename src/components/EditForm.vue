@@ -65,20 +65,23 @@ import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useNotesStore, type Note } from "@/stores/notes";
 import type { PropType } from "vue";
+import { useSnackbar } from "@/stores/snackbar";
 
-//const radios = ref<string>("3");
 const inlineState = ref<boolean>();
 const closeIcon = mdiClose;
 const store = useAuthStore();
 const storeNotes = useNotesStore();
 const { plusButton, showInputState } = storeToRefs(store);
-const { handleUpdateNote, getSnackbar } = storeNotes;
+const { handleUpdateNote } = storeNotes;
 const { setLang } = storeToRefs(storeNotes);
+const storeSnackbar = useSnackbar();
+const { getSnackbar } = storeSnackbar;
 
 const props = defineProps({
   data: {} as PropType<Note>,
 });
 
+// get values from props (detail note window)
 const newNote = reactive({
   id: props.data?.id,
   title: props.data?.title,
@@ -86,6 +89,7 @@ const newNote = reactive({
   importance: props.data?.importance,
 }) as Note;
 
+// set radios buttons inline or not according to resize
 const handleResize = () => {
   if (innerWidth < 506) {
     inlineState.value = false;
@@ -94,11 +98,13 @@ const handleResize = () => {
   }
 };
 
+// cancel the window for editing note
 const handleCancelCross = () => {
   showInputState.value.editNote = false;
   plusButton.value = true;
 };
 
+// submit the changes
 const handleEditNote = async () => {
   await handleUpdateNote(newNote);
   getSnackbar(true, "orange", setLang.value.editForm.noteUpdate!);
@@ -106,6 +112,7 @@ const handleEditNote = async () => {
   plusButton.value = true;
 };
 
+// listen to resize event
 onBeforeMount(() => {
   addEventListener("resize", handleResize);
 });

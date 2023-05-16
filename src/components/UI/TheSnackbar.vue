@@ -12,11 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { useNotesStore } from "@/stores/notes";
 import { storeToRefs } from "pinia";
+import { useSnackbar } from "@/stores/snackbar";
 
-const storeNotes = useNotesStore();
-const { snackbar } = storeToRefs(storeNotes);
+const storeSnackbar = useSnackbar();
+const { snackbar } = storeToRefs(storeSnackbar);
 </script>
-
-<style scoped></style>

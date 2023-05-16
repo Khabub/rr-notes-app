@@ -64,15 +64,17 @@ import { mdiClose } from "@mdi/js";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useNotesStore, type Note } from "@/stores/notes";
+import { useSnackbar } from "@/stores/snackbar";
 
-//const radios = ref<string>("3");
 const inlineState = ref<boolean>();
 const closeIcon = mdiClose;
 const store = useAuthStore();
 const storeNotes = useNotesStore();
 const { plusButton, showInputState } = storeToRefs(store);
-const { handleCreateNote, getSnackbar } = storeNotes;
+const { handleCreateNote } = storeNotes;
 const { setLang } = storeToRefs(storeNotes);
+const storeSnackbar = useSnackbar();
+const { getSnackbar } = storeSnackbar;
 
 const newNote: Note = reactive({
   id: 0,
@@ -81,6 +83,7 @@ const newNote: Note = reactive({
   importance: "3",
 });
 
+// set radios buttons inline or not according to resize
 const handleResize = () => {
   if (innerWidth < 506) {
     inlineState.value = false;
@@ -89,11 +92,13 @@ const handleResize = () => {
   }
 };
 
+// cancel the window for entering note
 const handleCancelCross = () => {
   showInputState.value.enterNote = false;
   plusButton.value = true;
 };
 
+// submit the changes
 const handleEnterNote = async () => {
   await handleCreateNote(newNote);
   getSnackbar(true, "green", setLang.value.loginPage.noteCreated!);
@@ -102,6 +107,7 @@ const handleEnterNote = async () => {
   console.log(newNote);
 };
 
+// listen to resize event
 onBeforeMount(() => {
   addEventListener("resize", handleResize);
 });

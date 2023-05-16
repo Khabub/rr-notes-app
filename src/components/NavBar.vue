@@ -41,6 +41,7 @@ const drawer = ref<boolean>(false);
 const { user } = storeToRefs(store);
 const typedUser = user as Ref<User | null>;
 
+// show/hide side menu
 const handleNavMenu = () => {
   drawer.value = !drawer.value;
 };
