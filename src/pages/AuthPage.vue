@@ -1,17 +1,29 @@
 <template>
   <div class="container">
-    <h1>Welcome to</h1>
+    <h1>{{ setLang.authPage.h1 }}</h1>
     <h1 class="text-rrnotes">rr-notes</h1>
     <div class="buttons">
       <RouterLink :to="{ name: 'login' }"
-        ><v-btn variant="elevated" color="success">Login</v-btn></RouterLink
+        ><v-btn variant="elevated" color="success">{{
+          setLang.authPage.login
+        }}</v-btn></RouterLink
       >
       <RouterLink :to="{ name: 'register' }">
-        <v-btn variant="elevated" color="warning">Register</v-btn></RouterLink
+        <v-btn variant="elevated" color="warning">{{
+          setLang.authPage.register
+        }}</v-btn></RouterLink
       >
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useNotesStore } from "@/stores/notes";
+
+const storeNotes = useNotesStore();
+const { setLang } = storeToRefs(storeNotes);
+</script>
 
 <style scoped>
 .container {

@@ -1,12 +1,15 @@
 <template>
   <div>
     <transition name="input-scroll">
-      <InputForm v-if="showInputState" />
+      <InputForm v-if="showInputState.enterNote" />
+    </transition>
+    <transition name="input-scroll">
+      <EditForm v-if="showInputState.editNote" :data="notePropsData" />
     </transition>
     <div class="container">
       <div v-if="textabove" class="headline">
-        <h1>Your saved notes</h1>
-        <p>(click on a note for details)</p>
+        <h1>{{ setLang.mainPage.h1 }}</h1>
+        <p>{{ setLang.mainPage.p }}</p>
       </div>
       <div v-else class="without-heading"></div>
       <div v-if="checkLogin" class="container">
@@ -16,24 +19,25 @@
             :title="item.title"
             :note="item.note"
             :created_at="item.created_at"
-            :importance="item.importance"                      
+            :importance="item.importance"
+            @note-props-edit="handleNotePropsEdit"
           />
         </div>
       </div>
-    </div>    
+    </div>
   </div>
-  
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
-import { useNotesStore } from "@/stores/notes";
+import { useNotesStore, type Note } from "@/stores/notes";
 import { useRouter } from "vue-router";
 import TheNote from "@/components/UI/TheNote.vue";
 import InputForm from "@/components/InputForm.vue";
-// import NoteDetail from "@/components/UI/NoteDetail.vue";
+import EditForm from "@/components/EditForm.vue";
+import type { NoteProps } from "@/components/UI/NoteDetail.vue";
 
 const store = useAuthStore();
 const storeNotes = useNotesStore();
@@ -41,28 +45,38 @@ const { fetchUser } = store;
 const { isLoggedIn, plusButton, showInputState } = storeToRefs(store);
 const router = useRouter();
 
-
 const { allNotesHandler } = storeNotes;
-const { allNotes, textabove } = storeToRefs(storeNotes);
+const { allNotes, textabove, setLang } = storeToRefs(storeNotes);
+
+const notePropsData: Note = reactive({
+  id: 0,
+  title: "",
+  note: "",
+  importance: "",
+});
 
 const checkLogin = computed(() => isLoggedIn.value);
-
-
 
 onMounted(async () => {
   try {
     const userFound = await fetchUser();
-    if (!userFound) {      
+    if (!userFound) {
       router.push({ name: "authWindow" });
-    } else {     
+    } else {
       await allNotesHandler();
-      plusButton.value= true;
-      console.log("WELCOME");
+      plusButton.value = true;
     }
   } catch (error) {
     console.error(error);
   }
 });
+
+const handleNotePropsEdit = (data: NoteProps) => {
+  notePropsData.id = data.id as number;
+  notePropsData.title = data.title as string;
+  notePropsData.note = data.note as string;
+  notePropsData.importance = data.importance as string;
+};
 </script>
 
 <style scoped>
@@ -101,7 +115,6 @@ onMounted(async () => {
 .input-scroll-leave-from {
   opacity: 1;
   height: 450px;
- 
 }
 
 .input-scroll-leave-active {
@@ -111,5 +124,9 @@ onMounted(async () => {
   opacity: 0;
   height: 0;
   transform: translateY(-350px);
+}
+
+h1 {
+  text-align: center;
 }
 </style>

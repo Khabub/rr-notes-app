@@ -1,6 +1,6 @@
 import type { Note } from "@/stores/notes";
 
-export const saveToFile = (notes: Note[]) => {    
+export const saveToFile = (notes: Note[]) => {
   const json = JSON.stringify(notes);
   const blob = new Blob([json], { type: "application/json" });
   const link = document.createElement("a");

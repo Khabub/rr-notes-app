@@ -1,17 +1,17 @@
 <template>
   <div class="container display-flex">
     <form class="login-window display-flex" @submit.prevent>
-      <h1>Register</h1>
+      <h1>{{ setLang.authPage.register_2 }}</h1>
       <v-text-field
         class="input"
-        label="Name"
+        :label="setLang.loginPage.label"
         density="compact"
         variant="outlined"
         v-model="form.name"
       ></v-text-field>
       <v-text-field
         class="input"
-        label="Password"
+        :label="setLang.loginPage.password"
         type="password"
         density="compact"
         variant="outlined"
@@ -19,20 +19,24 @@
       ></v-text-field>
       <v-text-field
         class="input"
-        label="Password Confirm"
+        :label="setLang.loginPage.passConfirm"
         type="password"
         density="compact"
         variant="outlined"
         v-model="form.password_confirmation"
       ></v-text-field>
       <div class="buttons display-flex">
-        <v-btn variant="elevated" color="warning" @click="handleSubmitRegister"
-          >Register</v-btn
+        <v-btn
+          variant="elevated"
+          density="compact"
+          color="warning"
+          @click="handleSubmitRegister"
+          >{{ setLang.authPage.register }}</v-btn
         >
         <RouterLink :to="{ name: 'authWindow' }">
-          <v-btn variant="elevated" density="compact" color="blue"
-            >Back</v-btn
-          ></RouterLink
+          <v-btn variant="elevated" density="compact" color="blue">{{
+            setLang.loginPage.back
+          }}</v-btn></RouterLink
         >
       </div>
     </form>
@@ -44,6 +48,10 @@ import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { useNotesStore } from "@/stores/notes";
+
+const storeNotes = useNotesStore();
+const { setLang } = storeToRefs(storeNotes);
 
 interface Form {
   name: string;

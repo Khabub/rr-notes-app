@@ -6,7 +6,7 @@
         style="border-top: 3px solid grey; width: 110%; margin-bottom: 1rem"
       />
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
-      <h3 v-else>Not logged in</h3>
+      <h3 v-else>{{ setLang.theContent.h3 }}</h3>
       <v-btn
         v-if="isLoggedIn"
         class="logout-class"
@@ -14,29 +14,29 @@
         density="compact"
         color="error"
         @click="handleSubmitLogout"
-        >Logout</v-btn
+        >{{ setLang.theContent.logout }}</v-btn
       >
       <hr style="border-top: 3px solid grey; width: 110%; margin-top: 1rem" />
       <div v-if="isLoggedIn" class="textabove">
-        <h4>Text above notes</h4>
+        <h4>{{ setLang.theContent.h4 }}</h4>
         <v-switch v-model="textabove" color="primary" hide-details></v-switch>
       </div>
-      <div v-if="isLoggedIn" class="textabove">
-        <h4>Set language</h4>
+      <div class="textabove">
+        <h4>{{ setLang.theContent.h4_1 }}</h4>
         <v-radio-group class="radio-label" v-model="radios">
           <v-radio label="ENG" color="primary" value="eng"></v-radio>
           <v-radio label="CZE" color="primary" value="cze"></v-radio>
         </v-radio-group>
       </div>
       <div v-if="isLoggedIn" class="savenotes">
-        <h4>Save notes to a file (.json)</h4>
+        <h4>{{ setLang.theContent.h4_2 }}</h4>
         <v-btn
           class="logout-class"
           variant="elevated"
           density="compact"
           color="primary"
           @click="saveToFile(allNotes)"
-          >Save</v-btn
+          >{{ setLang.theContent.save }}</v-btn
         >
       </div>
     </div>
@@ -63,14 +63,10 @@ const showNotes = ref<boolean>(false);
 const { handleLogout } = store;
 const router = useRouter();
 const storeNotes = useNotesStore();
-const { textabove, allNotes } = storeToRefs(storeNotes);
+const { textabove, allNotes, radios, setLang } = storeToRefs(storeNotes);
 const { user, isLoggedIn, plusButton } = storeToRefs(store);
 
 const typedUser = user as Ref<User | null>;
-
-const radios = ref("eng");
-
-console.log(radios);
 
 const handleSubmitLogout = async () => {
   await handleLogout();

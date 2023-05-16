@@ -1,7 +1,10 @@
 <template>
   <div>
     <NavBar />
-    <RouterView v-slot="{ Component }" :showInputState="showInputState">
+    <RouterView
+      v-slot="{ Component }"
+      :showInputState="showInputState.enterNote"
+    >
       <transition name="trans">
         <component :is="Component" />
       </transition>
@@ -13,9 +16,10 @@
       color="blue"
       size="large"
       style="font-size: 2rem"
-      @click="showInputForm"
+      @click="showEnterForm"
       >+</v-btn
     >
+    <TheSnackbar />
   </div>
 </template>
 
@@ -24,18 +28,18 @@ import "@fontsource/roboto";
 import NavBar from "./components/NavBar.vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
+import TheSnackbar from "./components/UI/TheSnackbar.vue";
 
 const store = useAuthStore();
 const { plusButton, showInputState } = storeToRefs(store);
 
-const showInputForm = () => {
-  showInputState.value = !showInputState.value;
+const showEnterForm = () => {
+  showInputState.value.enterNote = !showInputState.value.enterNote;
   plusButton.value = false;
 };
 </script>
 
 <style scoped>
-
 .plusButton {
   position: absolute;
   right: 30px;

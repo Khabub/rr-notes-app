@@ -1,12 +1,20 @@
 import { defineStore } from "pinia";
 import { csrfCookie, login, getUser, register, logout } from "@/http/auth-api";
-import { computed, ref } from "vue";
+import { computed, reactive, ref } from "vue";
+
+interface NoteWindow {
+  enterNote: boolean;
+  editNote: boolean;
+}
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref(null);
   const errors = ref({});
   const plusButton = ref<boolean>(false);
-  const showInputState = ref<boolean>(false);
+  const showInputState: NoteWindow = reactive({
+    enterNote: false,
+    editNote: false,
+  });
 
   const isLoggedIn = computed(() => !!user.value);
 
@@ -69,6 +77,6 @@ export const useAuthStore = defineStore("auth", () => {
     user,
     isLoggedIn,
     plusButton,
-    showInputState
+    showInputState,
   };
 });

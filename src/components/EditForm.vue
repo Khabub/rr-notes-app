@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>{{ setLang.inputForm.h2 }}</h2>
+    <h2>{{ setLang.editForm.h2 }}</h2>
     <v-form class="form" @submit.prevent>
       <v-text-field
         :label="setLang.editForm.labelHeading"
@@ -42,8 +42,8 @@
         ></v-radio>
       </v-radio-group>
 
-      <v-btn color="purple" width="100vw" @click="handleEnterNote">{{
-        setLang.inputForm.enter
+      <v-btn color="purple" width="100vw" @click="handleEditNote">{{
+        setLang.editForm.edit
       }}</v-btn>
 
       <svg-icon
@@ -64,6 +64,7 @@ import { mdiClose } from "@mdi/js";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useNotesStore, type Note } from "@/stores/notes";
+import type { PropType } from "vue";
 
 //const radios = ref<string>("3");
 const inlineState = ref<boolean>();
@@ -71,15 +72,19 @@ const closeIcon = mdiClose;
 const store = useAuthStore();
 const storeNotes = useNotesStore();
 const { plusButton, showInputState } = storeToRefs(store);
-const { handleCreateNote, getSnackbar } = storeNotes;
+const { handleUpdateNote, getSnackbar } = storeNotes;
 const { setLang } = storeToRefs(storeNotes);
 
-const newNote: Note = reactive({
-  id: 0,
-  title: "",
-  note: "",
-  importance: "3",
+const props = defineProps({
+  data: {} as PropType<Note>,
 });
+
+const newNote = reactive({
+  id: props.data?.id,
+  title: props.data?.title,
+  note: props.data?.note,
+  importance: props.data?.importance,
+}) as Note;
 
 const handleResize = () => {
   if (innerWidth < 506) {
@@ -90,16 +95,15 @@ const handleResize = () => {
 };
 
 const handleCancelCross = () => {
-  showInputState.value.enterNote = false;
+  showInputState.value.editNote = false;
   plusButton.value = true;
 };
 
-const handleEnterNote = async () => {
-  await handleCreateNote(newNote);
-  getSnackbar(true, "green", setLang.value.loginPage.noteCreated!);
-  showInputState.value.enterNote = false;
+const handleEditNote = async () => {
+  await handleUpdateNote(newNote);
+  getSnackbar(true, "orange", setLang.value.editForm.noteUpdate!);
+  showInputState.value.editNote = false;
   plusButton.value = true;
-  console.log(newNote);
 };
 
 onBeforeMount(() => {

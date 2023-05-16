@@ -7,8 +7,8 @@ import MainPage from "@/pages/MainPage.vue";
 const routes = [
   {
     name: "mainPage",
-    path: "/",    
-   // meta: { needsAuth: true },
+    path: "/",
+    // meta: { needsAuth: true },
     component: MainPage,
   },
   {

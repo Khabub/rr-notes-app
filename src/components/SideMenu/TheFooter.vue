@@ -16,7 +16,7 @@
         @click="() => openInNewTab('https://github.com/Khabub')"
       ></SvgIcon>
     </div>
-    <p class="created">Created by Robert Rozehnal, 2023</p>
+    <p class="created">{{ setLang.theFooter.p }}</p>
   </div>
 </template>
 
@@ -25,7 +25,11 @@ import { openInNewTab } from "@/utils/openNewTab";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiFacebook } from "@mdi/js";
 import { mdiGithub } from "@mdi/js";
+import { useNotesStore } from "@/stores/notes";
+import { storeToRefs } from "pinia";
 
+const storeNotes = useNotesStore();
+const { setLang } = storeToRefs(storeNotes);
 const pathFB = mdiFacebook;
 const pathGithub = mdiGithub;
 </script>

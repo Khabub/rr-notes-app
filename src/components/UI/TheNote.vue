@@ -19,6 +19,7 @@
       :importance="props.importance"
       :created_at="props.created_at"
       @cancel-crossEmit="handleNoteDetailShow"
+      @note-props="emitHandle"
     />
   </v-dialog>
 </template>
@@ -26,7 +27,7 @@
 <script setup lang="ts">
 import { ref, type PropType } from "vue";
 import { getTime } from "@/utils/getTime";
-import NoteDetail from "./NoteDetail.vue";
+import NoteDetail, { type NoteProps } from "./NoteDetail.vue";
 
 const noteDetailShow = ref<boolean>(false);
 
@@ -37,6 +38,14 @@ const props = defineProps({
   importance: String as PropType<string>,
   created_at: String as PropType<string>,
 });
+
+const emit = defineEmits<{
+  (event: "note-props-edit", value: NoteProps): void;
+}>();
+
+const emitHandle = (data: NoteProps) => {
+  emit("note-props-edit", data);
+};
 
 const handleNoteDetailShow = () => {
   noteDetailShow.value = !noteDetailShow.value;

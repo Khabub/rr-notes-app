@@ -7,8 +7,20 @@
     <p class="note-content note-position">{{ props.note }}</p>
 
     <div class="edit-delete">
-      <v-btn size="small" color="orange" variant="outlined">Edit</v-btn>
-      <v-btn size="small" color="error" variant="flat">Delete</v-btn>
+      <v-btn
+        size="small"
+        color="orange"
+        variant="outlined"
+        @click="handleEdit"
+        >{{ setLang.noteDetail.edit }}</v-btn
+      >
+      <v-btn
+        size="small"
+        color="error"
+        variant="flat"
+        @click="alertDialog = true"
+        >{{ setLang.noteDetail.delete }}</v-btn
+      >
     </div>
 
     <svg-icon
@@ -17,6 +29,28 @@
       :path="closeIcon"
       @click="emit('cancel-crossEmit')"
     ></svg-icon>
+
+    <v-dialog v-model="alertDialog">
+      <div class="alert-dialog">
+        {{ setLang.noteDetail.confirm }}
+        <div class="alert-buttons">
+          <v-btn
+            variant="elevated"
+            color="red"
+            size="small"
+            @click="handleAlertDelete"
+            >{{ setLang.noteDetail.confirm_btn }}</v-btn
+          >
+          <v-btn
+            variant="elevated"
+            color="blue"
+            size="small"
+            @click="alertDialog = false"
+            >{{ setLang.noteDetail.cancel }}</v-btn
+          >
+        </div>
+      </div>
+    </v-dialog>
   </div>
 </template>
 
@@ -25,8 +59,21 @@ import type { PropType } from "vue";
 import { getTime } from "@/utils/getTime";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiClose } from "@mdi/js";
+import { useNotesStore } from "@/stores/notes";
+import { useAuthStore } from "@/stores/auth";
+import { storeToRefs } from "pinia";
+import { reactive, ref } from "vue";
 
 const closeIcon = mdiClose;
+const storeNotes = useNotesStore();
+const store = useAuthStore();
+const alertDialog = ref<boolean>(false);
+
+const { handleDeleteNote, getSnackbar } = storeNotes;
+const { setLang } = storeToRefs(storeNotes);
+const { plusButton, showInputState } = storeToRefs(store);
+
+// udělat ractive a poslat to do MainPage
 
 const props = defineProps({
   id: Number as PropType<number>,
@@ -36,9 +83,14 @@ const props = defineProps({
   created_at: String as PropType<string>,
 });
 
-const emit = defineEmits<{ (event: "cancel-crossEmit"): void }>();
+const noteDetailsProps = reactive(props);
 
-console.log("Note Detail");
+export type NoteProps = typeof props;
+
+const emit = defineEmits<{
+  (event: "cancel-crossEmit"): void;
+  (event: "note-props", value: NoteProps): void;
+}>();
 
 const importanceCheck = (item: string) => {
   switch (item) {
@@ -51,6 +103,19 @@ const importanceCheck = (item: string) => {
     default:
       break;
   }
+};
+
+const handleEdit = () => {
+  emit("cancel-crossEmit");
+  emit("note-props", noteDetailsProps);
+  showInputState.value.editNote = !showInputState.value.editNote;
+  plusButton.value = false;
+};
+
+const handleAlertDelete = async () => {
+  await handleDeleteNote(props.id as number);
+  getSnackbar(true, "red", setLang.value.noteDetail.noteDeleted!);
+  emit("cancel-crossEmit");
 };
 </script>
 
@@ -113,5 +178,27 @@ const importanceCheck = (item: string) => {
   align-items: center;
   width: 350px;
   margin: 2rem 0;
+}
+
+.alert-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgb(255, 255, 255);
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 5px 5px 10px grey;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+}
+.alert-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: inherit;
 }
 </style>

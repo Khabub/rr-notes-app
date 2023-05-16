@@ -1,10 +1,10 @@
 <template>
   <div class="container display-flex">
     <form class="login-window display-flex" @submit.prevent>
-      <h1>Login</h1>
+      <h1>{{ setLang.loginPage.login2 }}</h1>
       <v-text-field
         class="input"
-        label="Name"
+        :label="setLang.loginPage.label"
         density="compact"
         variant="outlined"
         v-model="form.name"
@@ -13,19 +13,23 @@
         class="input"
         type="password"
         @keydown.enter="handleSubmitLogin"
-        label="Password"
+        :label="setLang.loginPage.password"
         density="compact"
         variant="outlined"
         v-model="form.password"
       ></v-text-field>
       <div class="buttons display-flex">
-        <v-btn variant="elevated" color="success" @click="handleSubmitLogin"
-          >Login</v-btn
+        <v-btn
+          variant="elevated"
+          density="compact"
+          color="success"
+          @click="handleSubmitLogin"
+          >{{ setLang.loginPage.login }}</v-btn
         >
         <RouterLink :to="{ name: 'authWindow' }">
-          <v-btn variant="elevated" density="compact" color="blue"
-            >Back</v-btn
-          ></RouterLink
+          <v-btn variant="elevated" density="compact" color="blue">{{
+            setLang.loginPage.back
+          }}</v-btn></RouterLink
         >
       </div>
     </form>
@@ -50,7 +54,7 @@ const { handleLogin } = store;
 const { isLoggedIn, plusButton, showInputState } = storeToRefs(store);
 const router = useRouter();
 const storeNotes = useNotesStore();
-const { allNotes } = storeToRefs(storeNotes);
+const { allNotes, setLang } = storeToRefs(storeNotes);
 
 const form: Form = reactive({
   name: "",
@@ -63,7 +67,8 @@ const handleSubmitLogin = async () => {
   if (isLoggedIn.value) {
     allNotes.value = [];
     router.push({ name: "mainPage" });
-    showInputState.value = false;
+    showInputState.value.enterNote = false;
+    showInputState.value.editNote = false;
     plusButton.value = true;
     console.log("logged in");
   } else {
