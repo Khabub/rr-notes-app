@@ -69,6 +69,7 @@ onMounted(async () => {
     if (!userFound) {
       router.push({ name: "authWindow" });
     } else {
+      console.log("User not found!!!");
       await allNotesHandler();       
       plusButton.value = true;
     }
