@@ -5,21 +5,33 @@
       <v-text-field
         class="input"
         :label="setLang.loginPage.label"
+        :rules="[rules.required]"
         density="compact"
         variant="outlined"
+        clearable
+        color="primary"
         v-model="form.name"
+        style="margin-bottom: 1rem"
       ></v-text-field>
       <v-text-field
         class="input"
         :label="setLang.loginPage.password"
+        :rules="[rules.required]"
+        color="primary"
+        clearable
         type="password"
         density="compact"
         variant="outlined"
         v-model="form.password"
+        style="margin-bottom: 1rem"
       ></v-text-field>
       <v-text-field
         class="input"
         :label="setLang.loginPage.passConfirm"
+        @keydown.enter="handleSubmitRegister"
+        :rules="[rules.required]"
+        color="primary"
+        clearable
         type="password"
         density="compact"
         variant="outlined"
@@ -27,6 +39,7 @@
       ></v-text-field>
       <div class="buttons display-flex">
         <v-btn
+          :disabled="buttonState"
           variant="elevated"
           density="compact"
           color="warning"
@@ -34,17 +47,26 @@
           >{{ setLang.authPage.register }}</v-btn
         >
         <RouterLink :to="{ name: 'authWindow' }">
-          <v-btn variant="elevated" density="compact" color="blue">{{
+          <v-btn variant="elevated" density="compact" color="blue" @click="errors = ''">{{
             setLang.loginPage.back
           }}</v-btn></RouterLink
         >
       </div>
+      <v-alert
+        v-if="errors"
+        prominent
+        variant="elevated"
+        density="compact"
+        type="error"
+        :text="setLang.errors.login"
+        style="margin-top: 1rem"
+      ></v-alert>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -61,7 +83,7 @@ interface Form {
 
 const store = useAuthStore();
 const { handleRegister } = store;
-const { isLoggedIn } = storeToRefs(store);
+const { isLoggedIn, rules, errors } = storeToRefs(store);
 const router = useRouter();
 
 const form: Form = reactive({
@@ -70,12 +92,16 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
+// disable login button if the inputs are empty
+const buttonState = computed(
+  () => !(form.name && form.password && form.password_confirmation) ?? true
+);
+
 // register
-const handleSubmitRegister = async () => {
+const handleSubmitRegister = async () => {  
   await handleRegister(form);
   if (isLoggedIn.value) {
-    router.push({ name: "mainPage" });
-    console.log("Registered");
+    router.push({ name: "mainPage" });    
   }
 };
 </script>

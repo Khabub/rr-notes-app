@@ -19,13 +19,19 @@
       <hr style="border-top: 3px solid grey; width: 110%; margin-top: 1rem" />
       <div v-if="isLoggedIn" class="textabove">
         <h4>{{ setLang.theContent.h4 }}</h4>
-        <v-switch v-model="textabove" color="primary" hide-details></v-switch>
+        <v-switch
+          v-model="textAboveSet"
+          :disabled="allNotes.length === 0"
+          color="primary"
+          hide-details
+        ></v-switch>
       </div>
       <div class="textabove">
         <h4>{{ setLang.theContent.h4_1 }}</h4>
         <v-radio-group class="radio-label" v-model="radios">
           <v-radio label="ENG" color="primary" value="english"></v-radio>
           <v-radio label="CZE" color="primary" value="czech"></v-radio>
+          <v-radio label="GER" color="primary" value="german"></v-radio>
         </v-radio-group>
       </div>
       <div v-if="isLoggedIn" class="savenotes">
@@ -63,7 +69,7 @@ const showNotes = ref<boolean>(false);
 const { handleLogout } = store;
 const router = useRouter();
 const storeNotes = useNotesStore();
-const { textabove, allNotes, radios, setLang } = storeToRefs(storeNotes);
+const { allNotes, radios, setLang, textAboveSet } = storeToRefs(storeNotes);
 const { user, isLoggedIn, plusButton } = storeToRefs(store);
 
 const typedUser = user as Ref<User | null>;

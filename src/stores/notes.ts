@@ -6,8 +6,8 @@ import {
   updateNote,
 } from "@/http/notes-api";
 import { computed, ref } from "vue";
-import { engLang, czeLang } from "@/stores/language";
-import { checkLocale } from "@/utils/checkLocale";
+import { engLang, czeLang, gerLang } from "@/stores/language";
+import { checkLocale, checkTextAbove } from "@/utils/checkLocale";
 
 export interface Note {
   id: number;
@@ -17,37 +17,70 @@ export interface Note {
   created_at?: string;
 }
 
+const setItemInBrowser = (key: string, value: string) => {
+  window.localStorage.setItem(key, value);
+};
+
 export const useNotesStore = defineStore("notes", () => {
   // note database
   const allNotes = ref<Note[]>([]);
 
   // hide/show the text above notes
-  const textabove = ref<boolean>(true);
+  const textabove = ref<boolean>(false);
+
+  // check if is TextAbove set in browser
+  textabove.value = checkTextAbove();
 
   // set importance radio button
-  const radios = ref("");
+  const radios = ref<string>("");
 
   // check if is language set in browser
   radios.value = checkLocale();
 
+  const loading = ref<boolean>(false);
+
+  // change TextAbove settings
+  const textAboveSet = computed({
+    get: () => textabove.value,
+    set: (newValue) => {
+      textabove.value = newValue;
+      if (newValue) {
+        setItemInBrowser("rr-notes_v2_textAbove", "1");
+      } else {
+        setItemInBrowser("rr-notes_v2_textAbove", "0");
+      }
+    },
+  });
+
   // change languages
   const setLang = computed(() => {
-    if (radios.value === "english") {
-      window.localStorage.setItem("rr-notes_v2_lang", "english");
-      return { ...engLang };
-    } else {
-      window.localStorage.setItem("rr-notes_v2_lang", "czech");
-      return { ...czeLang };
+    switch (radios.value) {
+      case "english": {
+        setItemInBrowser("rr-notes_v2_lang", "english");
+        return { ...engLang };
+      }
+      case "czech": {
+        setItemInBrowser("rr-notes_v2_lang", "czech");
+        return { ...czeLang };
+      }
+      case "german": {
+        setItemInBrowser("rr-notes_v2_lang", "czech");
+        return { ...gerLang };
+      }
+      default:
+        return { ...engLang };
     }
   });
 
   // fetch all notes
   const allNotesHandler = async () => {
+    loading.value = true;
     try {
       const { data } = await getAllNotes();
       const fetchedNotes: Note[] = data.data;
       allNotes.value = fetchedNotes;
       allNotes.value.reverse();
+      loading.value = false;
     } catch (error) {
       console.log("CHYBA: ", error);
     }
@@ -88,5 +121,7 @@ export const useNotesStore = defineStore("notes", () => {
     handleUpdateNote,
     setLang,
     radios,
+    loading,
+    textAboveSet,
   };
 });

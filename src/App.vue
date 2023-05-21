@@ -37,14 +37,16 @@ const { plusButton, showInputState } = storeToRefs(store);
 const showEnterForm = () => {
   showInputState.value.enterNote = !showInputState.value.enterNote;
   plusButton.value = false;
+  window.scrollTo({top: 0});
 };
 </script>
 
 <style scoped>
 .plusButton {
-  position: absolute;
+  position: fixed;
   right: 30px;
   bottom: 30px;
+  
 }
 
 .trans-enter-from {

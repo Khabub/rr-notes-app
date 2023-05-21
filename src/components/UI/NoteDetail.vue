@@ -64,6 +64,7 @@ import { useAuthStore } from "@/stores/auth";
 import { useSnackbar } from "@/stores/snackbar";
 import { storeToRefs } from "pinia";
 import { reactive, ref } from "vue";
+import { importanceCheck } from "@/utils/importanceCheck";
 
 const closeIcon = mdiClose;
 const storeNotes = useNotesStore();
@@ -94,24 +95,13 @@ const emit = defineEmits<{
   (event: "note-props", value: NoteProps): void;
 }>();
 
-const importanceCheck = (item: string) => {
-  switch (item) {
-    case "1":
-      return "impRed";
-    case "2":
-      return "impOrange";
-    case "3":
-      return "impGreen";
-    default:
-      break;
-  }
-};
 
-const handleEdit = () => {
+
+const handleEdit = () => {  
   emit("cancel-crossEmit");
   emit("note-props", noteDetailsProps);
   showInputState.value.editNote = !showInputState.value.editNote;
-  plusButton.value = false;
+  plusButton.value = false;   
 };
 
 const handleAlertDelete = async () => {

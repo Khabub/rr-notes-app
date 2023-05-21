@@ -3,23 +3,30 @@
     <form class="login-window display-flex" @submit.prevent>
       <h1>{{ setLang.loginPage.login2 }}</h1>
       <v-text-field
+        v-model="form.name"
         class="input"
         :label="setLang.loginPage.label"
+        :rules="[rules.required]"        
+        clearable    
         density="compact"
         variant="outlined"
-        v-model="form.name"
+        style="margin-bottom: 1rem"
       ></v-text-field>
       <v-text-field
         class="input"
         type="password"
         @keydown.enter="handleSubmitLogin"
         :label="setLang.loginPage.password"
+        :rules="[rules.required]"
+        color="primary"
+        clearable
         density="compact"
         variant="outlined"
         v-model="form.password"
       ></v-text-field>
       <div class="buttons display-flex">
         <v-btn
+          :disabled="buttonState"
           variant="elevated"
           density="compact"
           color="success"
@@ -27,17 +34,30 @@
           >{{ setLang.loginPage.login }}</v-btn
         >
         <RouterLink :to="{ name: 'authWindow' }">
-          <v-btn variant="elevated" density="compact" color="blue">{{
-            setLang.loginPage.back
-          }}</v-btn></RouterLink
+          <v-btn
+            variant="elevated"
+            density="compact"
+            color="blue"
+            @click="errors = ''"
+            >{{ setLang.loginPage.back }}</v-btn
+          ></RouterLink
         >
       </div>
+      <v-alert
+        v-if="errors"
+        prominent           
+        variant="elevated"
+        density="compact"
+        type="error"
+        :text="setLang.errors.login"
+        style="margin-top: 1rem;"
+      ></v-alert>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -51,7 +71,8 @@ interface Form {
 
 const store = useAuthStore();
 const { handleLogin } = store;
-const { isLoggedIn, plusButton, showInputState } = storeToRefs(store);
+const { isLoggedIn, plusButton, showInputState, rules, errors } =
+  storeToRefs(store);
 const router = useRouter();
 const storeNotes = useNotesStore();
 const { allNotes, setLang } = storeToRefs(storeNotes);
@@ -62,6 +83,9 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
+// diable login button if the inputs are empty
+const buttonState = computed(() => !(form.name && form.password) ?? true);
+
 // login, redirect
 const handleSubmitLogin = async () => {
   await handleLogin(form);
@@ -70,7 +94,7 @@ const handleSubmitLogin = async () => {
     router.push({ name: "mainPage" });
     showInputState.value.enterNote = false;
     showInputState.value.editNote = false;
-    plusButton.value = true;    
+    plusButton.value = true;
   } else {
     console.log("NOT logged in");
   }

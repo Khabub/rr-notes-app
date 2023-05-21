@@ -4,13 +4,16 @@
     <v-form class="form" @submit.prevent>
       <v-text-field
         :label="setLang.editForm.labelHeading"
-        variant="outlined"
+        :rules="[rules.required, rules.length]"
+        variant="outlined"              
         density="compact"
-        v-model="newNote.title"
+        v-model="newNote.title" 
+        style="margin-bottom: 1rem"
       ></v-text-field>
 
       <v-textarea
         :label="setLang.editForm.labelNote"
+        :rules="[rules.required]"        
         variant="outlined"
         density="compact"
         v-model="newNote.note"
@@ -42,9 +45,13 @@
         ></v-radio>
       </v-radio-group>
 
-      <v-btn color="purple" width="100vw" @click="handleEnterNote">{{
-        setLang.inputForm.enter
-      }}</v-btn>
+      <v-btn
+        color="purple"
+        width="100vw"
+        :disabled="buttonState || !(newNote.title.length <= 21)"
+        @click="handleEnterNote"
+        >{{ setLang.inputForm.enter }}</v-btn
+      >
 
       <svg-icon
         class="cancel-cross"
@@ -57,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, reactive } from "vue";
+import { computed, onBeforeMount, reactive } from "vue";
 import { ref } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiClose } from "@mdi/js";
@@ -70,8 +77,8 @@ const inlineState = ref<boolean>();
 const closeIcon = mdiClose;
 const store = useAuthStore();
 const storeNotes = useNotesStore();
-const { plusButton, showInputState } = storeToRefs(store);
-const { handleCreateNote } = storeNotes;
+const { plusButton, showInputState, rules } = storeToRefs(store);
+const { handleCreateNote, allNotesHandler } = storeNotes;
 const { setLang } = storeToRefs(storeNotes);
 const storeSnackbar = useSnackbar();
 const { getSnackbar } = storeSnackbar;
@@ -82,6 +89,9 @@ const newNote: Note = reactive({
   note: "",
   importance: "3",
 });
+
+// disable submit button button if the inputs are empty
+const buttonState = computed(() => !(newNote.title && newNote.note) ?? true);
 
 // set radios buttons inline or not according to resize
 const handleResize = () => {
@@ -101,10 +111,10 @@ const handleCancelCross = () => {
 // submit the changes
 const handleEnterNote = async () => {
   await handleCreateNote(newNote);
+  await allNotesHandler(); 
   getSnackbar(true, "green", setLang.value.loginPage.noteCreated!);
   showInputState.value.enterNote = false;
   plusButton.value = true;
-  console.log(newNote);
 };
 
 // listen to resize event
@@ -147,12 +157,14 @@ h2 {
 .form {
   width: 90vw;
   max-width: 550px;
+  position: relative;
 }
 
 .cancel-cross {
   position: absolute;
-  top: 55px;
-  right: 30px;
+  top: -44px;
+  right: 0px;
   color: red;
+  
 }
 </style>

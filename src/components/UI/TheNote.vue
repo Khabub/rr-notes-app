@@ -9,7 +9,9 @@
     </div>
 
     <h2 class="note-heading-h2 note-position">{{ props.title }}</h2>
-    <p class="note-content note-position">{{ props.note }}</p>
+   
+      <p class="note-content note-position">{{ props.note }}</p>
+   
   </div>
   <v-dialog v-model="noteDetailShow" max-width="380px">
     <NoteDetail
@@ -28,6 +30,7 @@
 import { ref, type PropType } from "vue";
 import { getTime } from "@/utils/getTime";
 import NoteDetail, { type NoteProps } from "./NoteDetail.vue";
+import { importanceCheck } from "@/utils/importanceCheck";
 
 const noteDetailShow = ref<boolean>(false);
 
@@ -51,21 +54,7 @@ const emitHandle = (data: NoteProps) => {
 
 // modal detail note window show/hide
 const handleNoteDetailShow = () => {
-  noteDetailShow.value = !noteDetailShow.value;
-};
-
-// check importance of note and set the class
-const importanceCheck = (item: string) => {
-  switch (item) {
-    case "1":
-      return "impRed";
-    case "2":
-      return "impOrange";
-    case "3":
-      return "impGreen";
-    default:
-      break;
-  }
+  noteDetailShow.value = !noteDetailShow.value; 
 };
 </script>
 
@@ -76,12 +65,13 @@ const importanceCheck = (item: string) => {
   border-radius: 0.8rem;
   margin-bottom: 1rem;
   box-shadow: 5px 5px 10px 5px grey;
+  
 }
 
 .note-position {
   width: 90vw;
   max-width: 350px;
-  padding: 0 0.5rem;
+  padding: 0 2rem 0 0.5rem;
 }
 
 .note-content {

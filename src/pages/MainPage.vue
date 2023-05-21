@@ -7,11 +7,14 @@
       <EditForm v-if="showInputState.editNote" :data="notePropsData" />
     </transition>
     <div class="container">
-      <div v-if="textabove" class="headline">
+      <div v-if="(textabove && allNotes.length > 0)" class="headline">
         <h1>{{ setLang.mainPage.h1 }}</h1>
         <p>{{ setLang.mainPage.p }}</p>
       </div>
       <div v-else class="without-heading"></div>
+      <div v-if="!allNotes.length && !loading">
+        <h1>{{ setLang.errors.emptyDB }}</h1>
+      </div>
       <div v-if="checkLogin" class="container">
         <div v-for="(item, index) in allNotes" :key="index">
           <TheNote
@@ -25,6 +28,7 @@
         </div>
       </div>
     </div>
+    <TheLoading v-if="loading"/>    
   </div>
 </template>
 
@@ -38,6 +42,7 @@ import TheNote from "@/components/UI/TheNote.vue";
 import InputForm from "@/components/InputForm.vue";
 import EditForm from "@/components/EditForm.vue";
 import type { NoteProps } from "@/components/UI/NoteDetail.vue";
+import TheLoading from "@/components/UI/TheLoading.vue";
 
 const store = useAuthStore();
 const storeNotes = useNotesStore();
@@ -45,7 +50,7 @@ const { fetchUser } = store;
 const { isLoggedIn, plusButton, showInputState } = storeToRefs(store);
 const router = useRouter();
 const { allNotesHandler } = storeNotes;
-const { allNotes, textabove, setLang } = storeToRefs(storeNotes);
+const { allNotes, textabove, setLang, loading } = storeToRefs(storeNotes);
 
 const notePropsData: Note = reactive({
   id: 0,
@@ -60,10 +65,11 @@ const checkLogin = computed(() => isLoggedIn.value);
 onMounted(async () => {
   try {
     const userFound = await fetchUser();
+    loading.value = true;
     if (!userFound) {
       router.push({ name: "authWindow" });
     } else {
-      await allNotesHandler();
+      await allNotesHandler();       
       plusButton.value = true;
     }
   } catch (error) {
