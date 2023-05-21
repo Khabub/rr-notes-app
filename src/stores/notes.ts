@@ -80,6 +80,7 @@ export const useNotesStore = defineStore("notes", () => {
       console.log("CHYBA: note.ts, ve funkci allNotesHandler, v try bloku");
       const { data } = await getAllNotes();
       console.log("CHYBA: note.ts, ve funkci allNotesHandler, po awaitu");
+      console.log("DATA", data);
       const fetchedNotes: Note[] = data.data;
       console.log("CHYBA: note.ts, ve funkci allNotesHandler, přiřazení data do fetchedNotes");
       console.log("print fetchedNotes", fetchedNotes);
