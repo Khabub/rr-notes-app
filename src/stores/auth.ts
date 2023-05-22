@@ -43,6 +43,7 @@ export const useAuthStore = defineStore("auth", () => {
   const csrfCheck = async () => {
     try {
       await csrfCookie();
+      console.log("csrf OK");
     } catch (error: any) {
       if (error.response.status === 419) {
         console.log("csrf chyba:", error);
