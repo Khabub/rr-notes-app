@@ -53,13 +53,27 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const loginCheck = async (credentials: any) => {
+    try {
+      await login(credentials);      
+      console.log("login OK");
+    } catch (error: any) {
+      if (error.response.status === 419) {
+        console.log("login chyba:", error);
+      } else {
+        console.log("Jiná chyba:", error);
+      }
+    }
+  };
+
   // handle user login, check csrfCookie, if the user exist and get him if exists
   const handleLogin = async (credentials: any) => {
     csrfCheck();
+    loginCheck(credentials);
     try {
-      await login(credentials);
       await fetchUser();
       errors.value = "";
+      console.log("fetch OK");
     } catch (error: any) {
       if (error.response && error.response.status === 422) {
         if (checkLocale() === "english") {
