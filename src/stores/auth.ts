@@ -40,17 +40,27 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  // handle user login, check csrfCookie, if the user exist and get him if exists
-  const handleLogin = async (credentials: any) => {
+  const csrfCheck = async () => {
     try {
       await csrfCookie();
+    } catch (error: any) {
+      if (error.response.status === 419) {
+        console.log("csrf chyba:", error);
+      } else {
+        console.log("Jina chyba:", error);
+      }
+    }
+  };
+
+  // handle user login, check csrfCookie, if the user exist and get him if exists
+  const handleLogin = async (credentials: any) => {
+    csrfCheck();
+    try {
       await login(credentials);
       await fetchUser();
       errors.value = "";
     } catch (error: any) {
-      if (error.response.status === 419) {
-        console.log(error);
-      } else if (error.response && error.response.status === 422) {
+      if (error.response && error.response.status === 422) {
         if (checkLocale() === "english") {
           errors.value = error.response.data.errors.input[0];
         } else {
