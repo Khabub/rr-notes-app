@@ -42,8 +42,8 @@ export const useAuthStore = defineStore("auth", () => {
 
   // handle user login, check csrfCookie, if the user exist and get him if exists
   const handleLogin = async (credentials: any) => {
-    await csrfCookie();
     try {
+      await csrfCookie();
       await login(credentials);
       await fetchUser();
       errors.value = "";
