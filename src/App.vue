@@ -29,6 +29,8 @@ import NavBar from "./components/NavBar.vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import TheSnackbar from "./components/UI/TheSnackbar.vue";
+import { onBeforeMount } from "vue";
+import { setCsrfToken } from "./utils/csrf";
 
 const store = useAuthStore();
 const { plusButton, showInputState } = storeToRefs(store);
@@ -39,6 +41,11 @@ const showEnterForm = () => {
   plusButton.value = false;
   window.scrollTo({top: 0});
 };
+
+onBeforeMount(() => {
+  setCsrfToken();
+})
+
 </script>
 
 <style scoped>
