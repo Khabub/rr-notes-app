@@ -65,8 +65,7 @@ import { useNotesStore } from "@/stores/notes";
 
 interface Form {
   name: string;
-  password: string;
-  password_confirmation: string;
+  password: string;  
 }
 
 const store = useAuthStore();
@@ -79,8 +78,7 @@ const { allNotes, setLang } = storeToRefs(storeNotes);
 
 const form: Form = reactive({
   name: "",
-  password: "",
-  password_confirmation: "",
+  password: "",  
 });
 
 // diable login button if the inputs are empty
