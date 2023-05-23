@@ -2,7 +2,8 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-axios.defaults.headers.common["XSRF-TOKEN"] = document
+// s X-XSRF-TOKEN to na localhostu funguje
+axios.defaults.headers.common["X-XSRF-TOKEN"] = document
   .querySelector('meta[name="csrf-token"]')!
   .getAttribute("content");
 
