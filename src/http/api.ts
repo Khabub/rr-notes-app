@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-axios.defaults.headers.common["X-CSRF-TOKEN"] = document
+axios.defaults.headers.common["XSRF-TOKEN"] = document
   .querySelector('meta[name="csrf-token"]')!
   .getAttribute("content");
 
