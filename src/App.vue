@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div>    
     <NavBar />
     <RouterView
-      v-slot="{ Component }"
-      :showInputState="showInputState.enterNote"
+    v-slot="{ Component }"
+    :showInputState="showInputState.enterNote"
     >
-      <transition name="trans">
-        <component :is="Component" />
+    <transition name="trans">
+      <component :is="Component" />
       </transition>
     </RouterView>
     <v-btn
@@ -18,8 +18,8 @@
       style="font-size: 2rem"
       @click="showEnterForm"
       >+</v-btn
-    >
-    <TheSnackbar />
+      >
+      <TheSnackbar />    
   </div>
 </template>
 

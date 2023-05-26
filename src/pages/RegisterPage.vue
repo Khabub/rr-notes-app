@@ -110,7 +110,8 @@ const handleSubmitRegister = async () => {
 .display-flex {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 2rem;
 }
 .container {
   height: 100vh;
@@ -120,6 +121,7 @@ const handleSubmitRegister = async () => {
 }
 .login-window {
   flex-direction: column;
+  align-items: center;
   width: 260px;
   background-color: azure;
   padding: 1rem;

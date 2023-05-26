@@ -3,7 +3,7 @@
     <div class="drawer">
       <h2>rr-notes</h2>
       <hr
-        style="border-top: 3px solid grey; width: 110%; margin-bottom: 1rem"
+        style="border-top: 3px solid grey; width: 90%; margin-bottom: 1rem"
       />
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
       <h3 v-else>{{ setLang.theContent.h3 }}</h3>
@@ -16,7 +16,7 @@
         @click="handleSubmitLogout"
         >{{ setLang.theContent.logout }}</v-btn
       >
-      <hr style="border-top: 3px solid grey; width: 110%; margin-top: 1rem" />
+      <hr style="border-top: 3px solid grey; width: 90%; margin-top: 1rem" />
       <div v-if="isLoggedIn" class="textabove">
         <h4>{{ setLang.theContent.h4 }}</h4>
         <v-switch
@@ -88,6 +88,7 @@ const handleSubmitLogout = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 90%;
 }
 .side-menu {
   display: flex;
@@ -95,7 +96,7 @@ const handleSubmitLogout = async () => {
   align-items: center;
   margin-top: auto;
   justify-content: space-between;
-  height: 100vh;
+  height: 100%;
 }
 .logout-class {
   margin-top: 1rem;
@@ -104,11 +105,11 @@ const handleSubmitLogout = async () => {
 .savenotes {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;    
   border: 1px solid grey;
   padding: 1rem 1rem 0 1rem;
   border-radius: 1rem;
-  margin: 0.9rem;
+  margin-top: 1rem;
 }
 
 .savenotes {

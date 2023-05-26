@@ -4,13 +4,14 @@
       <h1>{{ setLang.loginPage.login2 }}</h1>
       <v-text-field
         v-model="form.name"
-        class="input"
+        class="input"        
         :label="setLang.loginPage.label"
         :rules="[rules.required]"        
         clearable    
         density="compact"
         variant="outlined"
         style="margin-bottom: 1rem"
+        color="primary"        
       ></v-text-field>
       <v-text-field
         class="input"
@@ -57,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -103,7 +104,8 @@ const handleSubmitLogin = async () => {
 .display-flex {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;  
+  margin-top: 2rem;
 }
 .container {
   height: 100vh;
@@ -113,6 +115,7 @@ const handleSubmitLogin = async () => {
 }
 .login-window {
   flex-direction: column;
+  align-items: center;
   width: 260px;
   background-color: azure;
   padding: 1rem;

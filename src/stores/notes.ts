@@ -74,20 +74,12 @@ export const useNotesStore = defineStore("notes", () => {
 
   // fetch all notes
   const allNotesHandler = async () => {
-    console.log("INFO: note.ts, ve funkci allNotesHandler");
     loading.value = true;
     try {
-      console.log("INFO: note.ts, ve funkci allNotesHandler, v try bloku");
       const { data } = await getAllNotes();
-      console.log("INFO: note.ts, ve funkci allNotesHandler, po awaitu");
-      console.log("DATA", data);
       const fetchedNotes: Note[] = data.data;
-      console.log("INFO: note.ts, ve funkci allNotesHandler, přiřazení data do fetchedNotes");
-      console.log("print fetchedNotes", fetchedNotes);
       allNotes.value = fetchedNotes;
-      console.log("INFO: note.ts, ve funkci allNotesHandler, fetched do allNotes");
       allNotes.value.reverse();
-      console.log("INFO: note.ts, ve funkci allNotesHandler, po reversu");
       loading.value = false;
     } catch (error) {
       console.log("CHYBA: ", error);

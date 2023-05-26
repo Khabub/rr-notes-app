@@ -40,37 +40,11 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  const csrfCheck = async () => {
-    try {
-      await csrfCookie();
-      console.log("csrf OK");
-    } catch (error: any) {
-      if (error.response.status === 419) {
-        console.log("csrf chyba:", error);
-      } else {
-        console.log("Jina chyba:", error);
-      }
-    }
-  };
-
-  const loginCheck = async (credentials: any) => {
-    try {
-      await login(credentials);      
-      console.log("login OK");
-    } catch (error: any) {
-      if (error.response.status === 419) {
-        console.log("login chyba:", error);
-      } else {
-        console.log("Jiná chyba:", error);
-      }
-    }
-  };
-
   // handle user login, check csrfCookie, if the user exist and get him if exists
   const handleLogin = async (credentials: any) => {
-    await csrfCheck();
-    await loginCheck(credentials);
     try {
+      await csrfCookie();
+      await login(credentials);
       await fetchUser();
       errors.value = "";
       console.log("fetch OK");

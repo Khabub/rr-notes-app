@@ -1,4 +1,4 @@
-<template>
+<template> 
   <v-layout>
     <div class="container">
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
@@ -9,7 +9,7 @@
         v-model="drawer"
         location="left"
         width="200"
-        temporary
+        temporary          
       >
         <TheHeading />
       </v-navigation-drawer>
