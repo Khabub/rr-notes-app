@@ -24,6 +24,7 @@ import { mdiMenu } from "@mdi/js";
 import { ref } from "vue";
 import TheContent from "@/components/SideMenu/TheContent.vue";
 import { useNotesStore } from "@/stores/notes";
+import { watchEffect } from "vue";
 
 const storeNotes = useNotesStore();
 const { setLang } = storeToRefs(storeNotes);
@@ -37,12 +38,22 @@ const hamIcon = mdiMenu;
 const drawer = ref<boolean>(false);
 
 const { user } = storeToRefs(store);
+const { plusButton } = storeToRefs(store);
 const typedUser = user as Ref<User | null>;
+
+const emit = defineEmits<{
+  (event: "sidemenu-open", value: boolean): void;
+}>();
 
 // show/hide side menu
 const handleNavMenu = () => {
   drawer.value = !drawer.value;
+  plusButton.value = !plusButton.value;
 };
+
+watchEffect(() => {
+  emit("sidemenu-open", drawer.value);
+});
 </script>
 
 <style scoped>

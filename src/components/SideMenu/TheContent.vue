@@ -92,7 +92,7 @@ const handleSubmitLogout = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   height: 100%;
 }
 .logout-class {
