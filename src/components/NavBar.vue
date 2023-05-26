@@ -1,4 +1,4 @@
-<template> 
+<template>
   <v-layout>
     <div class="container">
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
@@ -9,9 +9,7 @@
         v-model="drawer"
         location="left"
         width="200"
-        temporary          
-      >
-        <TheHeading />
+        ><TheContent />
       </v-navigation-drawer>
     </div>
   </v-layout>
@@ -24,7 +22,7 @@ import { useAuthStore } from "@/stores/auth";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiMenu } from "@mdi/js";
 import { ref } from "vue";
-import TheHeading from "@/components/SideMenu/TheContent.vue";
+import TheContent from "@/components/SideMenu/TheContent.vue";
 import { useNotesStore } from "@/stores/notes";
 
 const storeNotes = useNotesStore();

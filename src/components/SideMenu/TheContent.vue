@@ -2,9 +2,7 @@
   <div class="side-menu">
     <div class="drawer">
       <h2>rr-notes</h2>
-      <hr
-        style="border-top: 3px solid grey; width: 90%; margin-bottom: 1rem"
-      />
+      <hr style="border-top: 3px solid grey; width: 90%; margin-bottom: 1rem" />
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
       <h3 v-else>{{ setLang.theContent.h3 }}</h3>
       <v-btn
@@ -46,7 +44,7 @@
         >
       </div>
     </div>
-    <TheFooter />
+    <TheFooter style="margin-top: 1rem;" />
   </div>
 </template>
 
@@ -94,8 +92,7 @@ const handleSubmitLogout = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: auto;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 100%;
 }
 .logout-class {
@@ -105,7 +102,7 @@ const handleSubmitLogout = async () => {
 .savenotes {
   display: flex;
   flex-direction: column;
-  align-items: center;    
+  align-items: center;
   border: 1px solid grey;
   padding: 1rem 1rem 0 1rem;
   border-radius: 1rem;

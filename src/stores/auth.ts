@@ -46,8 +46,7 @@ export const useAuthStore = defineStore("auth", () => {
       await csrfCookie();
       await login(credentials);
       await fetchUser();
-      errors.value = "";
-      console.log("fetch OK");
+      errors.value = "";      
     } catch (error: any) {
       if (error.response && error.response.status === 422) {
         if (checkLocale() === "english") {

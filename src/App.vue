@@ -1,12 +1,12 @@
 <template>
-  <div>    
+  <div>
     <NavBar />
     <RouterView
-    v-slot="{ Component }"
-    :showInputState="showInputState.enterNote"
+      v-slot="{ Component }"
+      :showInputState="showInputState.enterNote"
     >
-    <transition name="trans">
-      <component :is="Component" />
+      <transition name="trans">
+        <component :is="Component" />
       </transition>
     </RouterView>
     <v-btn
@@ -18,8 +18,8 @@
       style="font-size: 2rem"
       @click="showEnterForm"
       >+</v-btn
-      >
-      <TheSnackbar />    
+    >
+    <TheSnackbar />
   </div>
 </template>
 
@@ -37,17 +37,19 @@ const { plusButton, showInputState } = storeToRefs(store);
 const showEnterForm = () => {
   showInputState.value.enterNote = !showInputState.value.enterNote;
   plusButton.value = false;
-  window.scrollTo({top: 0});
+  window.scrollTo({ top: 0 });
 };
-
 </script>
 
 <style scoped>
+.side-menu-visible {
+  opacity: 0.5;
+  pointer-events: none;
+}
 .plusButton {
   position: fixed;
   right: 30px;
   bottom: 30px;
-  
 }
 
 .trans-enter-from {
