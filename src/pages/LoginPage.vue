@@ -4,18 +4,17 @@
       <h1>{{ setLang.loginPage.login2 }}</h1>
       <v-text-field
         v-model="form.name"
-        class="input"        
+        class="input"
         :label="setLang.loginPage.label"
-        :rules="[rules.required]"        
-        clearable    
+        :rules="[rules.required]"
+        clearable
         density="compact"
         variant="outlined"
         style="margin-bottom: 1rem"
-        color="primary"        
+        color="primary"
       ></v-text-field>
       <v-text-field
         class="input"
-        ref="textInput"
         type="password"
         @keydown.enter="handleSubmitLogin"
         :label="setLang.loginPage.password"
@@ -47,19 +46,19 @@
       </div>
       <v-alert
         v-if="errors"
-        prominent           
+        prominent
         variant="elevated"
         density="compact"
         type="error"
         :text="setLang.errors.login"
-        style="margin-top: 1rem;"
+        style="margin-top: 1rem"
       ></v-alert>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -67,7 +66,7 @@ import { useNotesStore } from "@/stores/notes";
 
 interface Form {
   name: string;
-  password: string;  
+  password: string;
 }
 
 const store = useAuthStore();
@@ -80,18 +79,19 @@ const { allNotes, setLang } = storeToRefs(storeNotes);
 
 const form: Form = reactive({
   name: "",
-  password: "",  
+  password: "",
 });
-
-// when using enter on mobile keyboard, the keyboard will disappear
-const textInputRef = ref<HTMLInputElement | null>(null);
 
 // diable login button if the inputs are empty
 const buttonState = computed(() => !(form.name && form.password) ?? true);
 
 // login, redirect
 const handleSubmitLogin = async () => {
-  textInputRef.value?.blur();
+  // remove keyboard on mobile after enter
+  const buttonElement = document.querySelector("button");
+  if (buttonElement) {
+    buttonElement.focus();
+  }
   await handleLogin(form);
   if (isLoggedIn.value) {
     allNotes.value = [];
@@ -109,7 +109,7 @@ const handleSubmitLogin = async () => {
 .display-flex {
   display: flex;
   justify-content: center;
-  align-items: flex-start;  
+  align-items: flex-start;
   margin-top: 2rem;
 }
 .container {

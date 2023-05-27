@@ -26,8 +26,7 @@
         style="margin-bottom: 1rem"
       ></v-text-field>
       <v-text-field
-        class="input"
-        ref="textInput"
+        class="input"        
         :label="setLang.loginPage.passConfirm"
         @keydown.enter="handleSubmitRegister"        
         :rules="[rules.required]"
@@ -67,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -93,9 +92,6 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
-// when using enter on mobile keyboard, the keyboard will disappear
-const textInputRef = ref<HTMLInputElement | null>(null);
-
 // disable login button if the inputs are empty
 const buttonState = computed(
   () => !(form.name && form.password && form.password_confirmation) ?? true
@@ -103,7 +99,11 @@ const buttonState = computed(
 
 // register
 const handleSubmitRegister = async () => {  
-  textInputRef.value?.blur();
+  // remove keyboard on mobile after enter
+  const buttonElement = document.querySelector("button");
+  if (buttonElement) {
+    buttonElement.focus();
+  }
   await handleRegister(form);
   if (isLoggedIn.value) {
     router.push({ name: "mainPage" });    
