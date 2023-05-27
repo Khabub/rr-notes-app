@@ -15,6 +15,7 @@
       ></v-text-field>
       <v-text-field
         class="input"
+        ref="textInput"
         type="password"
         @keydown.enter="handleSubmitLogin"
         :label="setLang.loginPage.password"
@@ -58,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -82,11 +83,14 @@ const form: Form = reactive({
   password: "",  
 });
 
+const textInputRef = ref<HTMLInputElement | null>(null);
+
 // diable login button if the inputs are empty
 const buttonState = computed(() => !(form.name && form.password) ?? true);
 
 // login, redirect
 const handleSubmitLogin = async () => {
+  textInputRef.value?.blur();
   await handleLogin(form);
   if (isLoggedIn.value) {
     allNotes.value = [];

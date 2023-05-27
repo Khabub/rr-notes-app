@@ -103,7 +103,7 @@ const handleNotePropsEdit = (data: NoteProps) => {
   padding: 0.5rem;
 }
 .without-heading {
-  margin-top: 3rem;
+  margin-top: 3.5rem;
 }
 
 .input-scroll-enter-from {

@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -92,6 +92,8 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
+const textInputRef = ref<HTMLInputElement | null>(null);
+
 // disable login button if the inputs are empty
 const buttonState = computed(
   () => !(form.name && form.password && form.password_confirmation) ?? true
@@ -99,6 +101,7 @@ const buttonState = computed(
 
 // register
 const handleSubmitRegister = async () => {  
+  textInputRef.value?.blur();
   await handleRegister(form);
   if (isLoggedIn.value) {
     router.push({ name: "mainPage" });    

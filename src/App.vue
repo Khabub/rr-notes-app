@@ -3,7 +3,7 @@
     <NavBar @sidemenu-open="(value) => drawer = value" />
     <RouterView
       v-slot="{ Component }"
-      :class="drawer ? 'side-menu-visible' : ''"
+      :class="drawer ? 'side-menu-visible' : 'side-menu-hidden'"
       :showInputState="showInputState.enterNote"
     >
       <transition name="trans">
@@ -50,6 +50,12 @@ const showEnterForm = () => {
   filter: blur(2px);
   opacity: 0.5;
   pointer-events: none;
+  transition: all 0.5s;
+}
+.side-menu-hidden {   
+  background-color: transparent;
+  filter: blur(0);
+  opacity: 1;  
   transition: all 0.5s;
 }
 .plusButton {

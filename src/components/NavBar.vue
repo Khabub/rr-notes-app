@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Ref } from "vue";
+import { watch, type Ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/auth";
 import SvgIcon from "@jamescoyle/vue-icon";
@@ -24,7 +24,6 @@ import { mdiMenu } from "@mdi/js";
 import { ref } from "vue";
 import TheContent from "@/components/SideMenu/TheContent.vue";
 import { useNotesStore } from "@/stores/notes";
-import { watchEffect } from "vue";
 
 const storeNotes = useNotesStore();
 const { setLang } = storeToRefs(storeNotes);
@@ -47,13 +46,14 @@ const emit = defineEmits<{
 
 // show/hide side menu
 const handleNavMenu = () => {
-  drawer.value = !drawer.value;
-  plusButton.value = !plusButton.value;
+  drawer.value = !drawer.value;  
 };
 
-watchEffect(() => {
-  emit("sidemenu-open", drawer.value);
+watch(drawer, (oldValue, newValue) => {  
+  plusButton.value = !plusButton.value;
+  emit("sidemenu-open", !newValue);
 });
+
 </script>
 
 <style scoped>
