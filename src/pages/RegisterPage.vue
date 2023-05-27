@@ -27,8 +27,9 @@
       ></v-text-field>
       <v-text-field
         class="input"
+        ref="textInput"
         :label="setLang.loginPage.passConfirm"
-        @keydown.enter="handleSubmitRegister"
+        @keydown.enter="handleSubmitRegister"        
         :rules="[rules.required]"
         color="primary"
         clearable
@@ -92,6 +93,7 @@ const form: Form = reactive({
   password_confirmation: "",
 });
 
+// when using enter on mobile keyboard, the keyboard will disappear
 const textInputRef = ref<HTMLInputElement | null>(null);
 
 // disable login button if the inputs are empty

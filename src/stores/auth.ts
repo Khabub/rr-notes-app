@@ -66,7 +66,7 @@ export const useAuthStore = defineStore("auth", () => {
     password_confirmation?: string;
   }) => {
     try {
-      if (newUser.password !== newUser.password_confirmation) {
+      if (newUser.password !== newUser.password_confirmation) {               
         throw new Error("Error, passwords are not same");
       }
       await register(newUser);
@@ -75,7 +75,7 @@ export const useAuthStore = defineStore("auth", () => {
         password: newUser.password,
       });
     } catch (error: any | Error) {
-      if (error.response && error.response.status === 422) {
+      if (error.response && error.response.status === 422) {        
         if (checkLocale() === "english") {
           errors.value = error.response.data.errors.input[0];
         } else {

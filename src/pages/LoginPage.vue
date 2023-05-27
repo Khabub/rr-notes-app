@@ -83,6 +83,7 @@ const form: Form = reactive({
   password: "",  
 });
 
+// when using enter on mobile keyboard, the keyboard will disappear
 const textInputRef = ref<HTMLInputElement | null>(null);
 
 // diable login button if the inputs are empty

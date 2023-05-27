@@ -37,7 +37,7 @@ const hamIcon = mdiMenu;
 const drawer = ref<boolean>(false);
 
 const { user } = storeToRefs(store);
-const { plusButton } = storeToRefs(store);
+const { plusButton, isLoggedIn } = storeToRefs(store);
 const typedUser = user as Ref<User | null>;
 
 const emit = defineEmits<{
@@ -46,14 +46,15 @@ const emit = defineEmits<{
 
 // show/hide side menu
 const handleNavMenu = () => {
-  drawer.value = !drawer.value;  
+  drawer.value = !drawer.value;
 };
 
-watch(drawer, (oldValue, newValue) => {  
-  plusButton.value = !plusButton.value;
+watch(drawer, (oldValue, newValue) => {
+  if (isLoggedIn.value) {
+    plusButton.value = !plusButton.value;
+  }
   emit("sidemenu-open", !newValue);
 });
-
 </script>
 
 <style scoped>
