@@ -5,15 +5,15 @@
       <v-text-field
         :label="setLang.editForm.labelHeading"
         :rules="[rules.required, rules.length]"
-        variant="outlined"              
+        variant="outlined"
         density="compact"
-        v-model="newNote.title" 
+        v-model="newNote.title"
         style="margin-bottom: 1rem"
       ></v-text-field>
 
       <v-textarea
         :label="setLang.editForm.labelNote"
-        :rules="[rules.required]"        
+        :rules="[rules.required]"
         variant="outlined"
         density="compact"
         v-model="newNote.note"
@@ -111,7 +111,7 @@ const handleCancelCross = () => {
 // submit the changes
 const handleEnterNote = async () => {
   await handleCreateNote(newNote);
-  await allNotesHandler(); 
+  await allNotesHandler();
   getSnackbar(true, "green", setLang.value.loginPage.noteCreated!);
   showInputState.value.enterNote = false;
   plusButton.value = true;
@@ -129,7 +129,6 @@ onBeforeMount(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100vw;
 }
 
@@ -165,6 +164,11 @@ h2 {
   top: -44px;
   right: 0px;
   color: red;
-  
+}
+
+@media (min-width: 900px) {
+  .cancel-cross:hover {
+    cursor: pointer;
+  }
 }
 </style>

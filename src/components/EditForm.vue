@@ -118,22 +118,20 @@ const handleCancelCross = () => {
 // submit the changes
 const handleEditNote = async () => {
   await handleUpdateNote(newNote);
-  await allNotesHandler(); 
+  await allNotesHandler();
   getSnackbar(true, "orange", setLang.value.editForm.noteUpdate!);
   showInputState.value.editNote = false;
   plusButton.value = true;
 };
 
 // listen to resize event
-onBeforeMount(() => {  
+onBeforeMount(() => {
   addEventListener("resize", handleResize);
 });
 
 onUpdated(() => {
-  window.scrollTo({top: 0});  
-
+  window.scrollTo({ top: 0 });
 });
-
 </script>
 
 <style scoped>
@@ -142,7 +140,6 @@ onUpdated(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100vw;
 }
 
@@ -178,5 +175,10 @@ h2 {
   top: -44px;
   right: 0px;
   color: red;
+}
+@media (min-width: 900px) {
+  .cancel-cross:hover {
+    cursor: pointer;
+  }
 }
 </style>

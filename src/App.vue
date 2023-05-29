@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar @sidemenu-open="(value) => drawer = value" />
+    <NavBar @sidemenu-open="(value) => (drawer = value)" />
     <RouterView
       v-slot="{ Component }"
       :class="drawer ? 'side-menu-visible' : 'side-menu-hidden'"
@@ -45,17 +45,18 @@ const showEnterForm = () => {
 </script>
 
 <style scoped>
-.side-menu-visible {   
+.side-menu-visible {
   background-color: rgb(207, 207, 207);
   filter: blur(2px);
   opacity: 0.5;
   pointer-events: none;
   transition: all 0.5s;
+  height: 100vh;
 }
-.side-menu-hidden {   
+.side-menu-hidden {
   background-color: transparent;
   filter: blur(0);
-  opacity: 1;  
+  opacity: 1;
   transition: all 0.5s;
 }
 .plusButton {

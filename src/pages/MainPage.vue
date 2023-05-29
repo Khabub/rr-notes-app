@@ -7,7 +7,7 @@
       <EditForm v-if="showInputState.editNote" :data="notePropsData" />
     </transition>
     <div class="container">
-      <div v-if="(textabove && allNotes.length > 0)" class="headline">
+      <div v-if="textabove && allNotes.length > 0" class="headline">
         <h1>{{ setLang.mainPage.h1 }}</h1>
         <p>{{ setLang.mainPage.p }}</p>
       </div>
@@ -17,7 +17,7 @@
       </div>
       <div v-if="checkLogin" class="container menuIcon">
         <div v-for="(item, index) in allNotes" :key="index">
-          <TheNote            
+          <TheNote
             :id="item.id"
             :title="item.title"
             :note="item.note"
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <TheLoading v-if="loading"/>    
+    <TheLoading v-if="loading" />
   </div>
 </template>
 
@@ -70,7 +70,7 @@ onMounted(async () => {
       router.push({ name: "authWindow" });
     } else {
       console.log("User found!!!");
-      await allNotesHandler();       
+      await allNotesHandler();
       plusButton.value = true;
     }
   } catch (error) {
@@ -89,9 +89,9 @@ const handleNotePropsEdit = (data: NoteProps) => {
 <style scoped>
 .container {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 }
 
 .headline {
