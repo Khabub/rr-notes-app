@@ -14,6 +14,7 @@
         }}</v-btn></RouterLink
       >
     </div>
+    <h5 class="infotext">{{ setLang.authPage.infoText }}</h5>
   </div>
 </template>
 
@@ -46,5 +47,10 @@ const { setLang } = storeToRefs(storeNotes);
   padding: 3rem;
   border: 1px solid black;
   border-radius: 1rem;
+}
+.infotext {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.5rem;
 }
 </style>

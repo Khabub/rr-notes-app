@@ -64,7 +64,7 @@ export const useNotesStore = defineStore("notes", () => {
         return { ...czeLang };
       }
       case "german": {
-        setItemInBrowser("rr-notes_v2_lang", "czech");
+        setItemInBrowser("rr-notes_v2_lang", "german");
         return { ...gerLang };
       }
       default:

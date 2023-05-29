@@ -33,6 +33,7 @@ export interface LangAll {
   emptyDB: string;
   input: string;
   charLen: string;
+  infoText:string;
 }
 
 // components for translate the text
@@ -104,6 +105,7 @@ export const engLang: Record<LangTypes, Partial<LangAll>> = {
     login: "Login",
     register: "Register",
     register_2: "Register",
+    infoText: "All passwords, note names and the notes themselves are encrypted.",
   },
   errors: {
     login: "The data entered is incorrect",
@@ -169,6 +171,7 @@ export const czeLang: Record<LangTypes, Partial<LangAll>> = {
     login: "Přihlásit",
     register: "Registrovat",
     register_2: "Registrace",
+    infoText: "Všechna hesla, názvy poznámek i samotné poznámky jsou zašifrovány.",
   },
   errors: {
     login: "Zadané údaje jsou nesprávné",
@@ -234,6 +237,7 @@ export const gerLang: Record<LangTypes, Partial<LangAll>> = {
     login: "Anmelden",
     register: "Registrieren",
     register_2: "Registrieren",
+    infoText: "Alle Kennwörter, Notiznamen und die Notizen selbst sind verschlüsselt."
   },
   errors: {
     login: "Die eingegebenen Daten sind nicht korrekt",

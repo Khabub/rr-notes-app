@@ -15,9 +15,9 @@
       <div v-if="!allNotes.length && !loading">
         <h1>{{ setLang.errors.emptyDB }}</h1>
       </div>
-      <div v-if="checkLogin" class="container">
+      <div v-if="checkLogin" class="container menuIcon">
         <div v-for="(item, index) in allNotes" :key="index">
-          <TheNote
+          <TheNote            
             :id="item.id"
             :title="item.title"
             :note="item.note"
@@ -89,9 +89,9 @@ const handleNotePropsEdit = (data: NoteProps) => {
 <style scoped>
 .container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column;  
   align-items: center;
+  height: 100vh;
 }
 
 .headline {
@@ -135,5 +135,11 @@ const handleNotePropsEdit = (data: NoteProps) => {
 
 h1 {
   text-align: center;
+}
+
+@media (min-width: 900px) {
+  .menuIcon:hover {
+    cursor: pointer;
+  }
 }
 </style>

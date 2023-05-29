@@ -2,7 +2,7 @@
   <div>
     <div class="contact-icons">
       <SvgIcon
-        class="svg-icon"
+        class="svg-icon menuIcon"
         type="mdi"
         :path="pathFB"
         @click="
@@ -10,7 +10,7 @@
         "
       ></SvgIcon>
       <SvgIcon
-        class="svg-icon"
+        class="svg-icon menuIcon"
         type="mdi"
         :path="pathGithub"
         @click="() => openInNewTab('https://github.com/Khabub')"
@@ -45,5 +45,11 @@ const pathGithub = mdiGithub;
 .created {
   font-size: 0.7rem;
   margin-top: 0.5rem;
+}
+
+@media (min-width: 900px) {
+  .menuIcon:hover {
+    cursor: pointer;
+  }
 }
 </style>

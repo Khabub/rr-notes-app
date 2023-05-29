@@ -193,4 +193,10 @@ const handleAlertDelete = async () => {
   justify-content: space-around;
   width: inherit;
 }
+
+@media (min-width: 900px) {
+  .cancel-cross:hover {
+    cursor: pointer;
+  }
+}
 </style>

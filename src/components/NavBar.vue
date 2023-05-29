@@ -3,7 +3,12 @@
     <div class="container">
       <h3 v-if="typedUser">{{ typedUser.name }}</h3>
       <h3 v-else>{{ setLang.navBar.h3 }}</h3>
-      <svg-icon type="mdi" :path="hamIcon" @click="handleNavMenu"></svg-icon>
+      <svg-icon
+        class="menuIcon"
+        type="mdi"
+        :path="hamIcon"
+        @click="handleNavMenu"
+      ></svg-icon>
       <v-navigation-drawer
         style="background-color: #b3b3da"
         v-model="drawer"
@@ -68,10 +73,17 @@ watch(drawer, (oldValue, newValue) => {
   align-items: center;
   height: 40px;
   z-index: 900;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
 }
 
 h3 {
   font-size: 0.8rem;
+}
+
+
+@media (min-width: 900px) {
+  .menuIcon:hover {
+    cursor: pointer;
+  }
 }
 </style>
