@@ -28,20 +28,17 @@ import { mdiGithub } from "@mdi/js";
 import { useNotesStore } from "@/stores/notes";
 import { storeToRefs } from "pinia";
 
-const storeNotes = useNotesStore();
-const { setLang } = storeToRefs(storeNotes);
+const { setLang } = storeToRefs(useNotesStore());
 const pathFB = mdiFacebook;
 const pathGithub = mdiGithub;
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/globals.scss";
 .contact-icons {
-  display: flex;
-  justify-content: space-evenly;
+  @include flexDJA(row, space-evenly, flex-end);
   width: 100%;
-  align-items: flex-end;
 }
-
 .created {
   font-size: 0.7rem;
   margin-top: 0.5rem;

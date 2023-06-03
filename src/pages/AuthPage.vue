@@ -26,31 +26,25 @@ const storeNotes = useNotesStore();
 const { setLang } = storeToRefs(storeNotes);
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/globals.scss";
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include flexDJA(column);
   height: 100vh;
-}
-
-.text-rrnotes {
-  margin-bottom: 2rem;
-}
-
-.buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding: 3rem;
-  border: 1px solid black;
-  border-radius: 1rem;
-}
-.infotext {
-  text-align: center;
-  margin-top: 1rem;
-  padding: 0.5rem;
+  .text-rrnotes {
+    margin-bottom: 2rem;
+  }
+  .buttons {
+    @include flexDJA(column);
+    gap: 2rem;
+    padding: 3rem;
+    border: 1px solid $color-border;
+    border-radius: 1rem;
+  }
+  .infotext {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
 }
 </style>

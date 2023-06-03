@@ -44,7 +44,7 @@
         >
       </div>
     </div>
-    <TheFooter style="margin-top: 1rem;" />
+    <TheFooter style="margin-top: 1rem" />
   </div>
 </template>
 
@@ -69,64 +69,57 @@ const router = useRouter();
 const storeNotes = useNotesStore();
 const { allNotes, radios, setLang, textAboveSet } = storeToRefs(storeNotes);
 const { user, isLoggedIn, plusButton } = storeToRefs(store);
-
 const typedUser = user as Ref<User | null>;
+
+const emit = defineEmits<{
+  (event: "set-drawer"): void;
+}>();
 
 // logout
 const handleSubmitLogout = async () => {
   await handleLogout();
   showNotes.value = false;
   plusButton.value = false;
+  emit("set-drawer");
   router.push({ name: "authWindow" });
 };
 </script>
 
-<style scoped>
-.drawer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-}
+<style scoped lang="scss">
+@import "../../assets/globals.scss";
 .side-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  @include flexDJA(column, space-between);
   height: 100%;
+  .drawer {
+    @include flexDJA(column);
+    width: 90%;
+    .logout-class {
+      margin-top: 1rem;
+    }
+    .textabove,
+    .savenotes {
+      @include flexDJA(column);
+      border: 1px solid $color-boxShadow;
+      padding: 1rem 1rem 0 1rem;
+      border-radius: 1rem;
+      margin-top: 1rem;
+    }
+    .savenotes {
+      padding-bottom: 1rem;
+    }
+    h2 {
+      padding: 0.5rem;
+    }
+    h3 {
+      font-size: 0.9rem;
+    }
+    h4 {
+      font-weight: 400;
+      text-align: center;
+    }
+    .radio-label {
+      font-weight: 700;
+    }
+  }
 }
-.logout-class {
-  margin-top: 1rem;
-}
-.textabove,
-.savenotes {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid grey;
-  padding: 1rem 1rem 0 1rem;
-  border-radius: 1rem;
-  margin-top: 1rem;
-}
-
-.savenotes {
-  padding-bottom: 1rem;
-}
-
-h2 {
-  padding: 0.5rem;
-}
-h3 {
-  font-size: 0.9rem;
-}
-
-h4 {
-  font-weight: 400;
-  text-align: center;
-}
-.radio-label {
-  font-weight: 700;
-}
-
-
 </style>

@@ -88,8 +88,8 @@ export const useNotesStore = defineStore("notes", () => {
 
   // create the note
   const handleCreateNote = async (value: Note) => {
-    const { data: createdNote } = await createNote(value);
-    allNotes.value.unshift(createdNote.data);
+    const { data: createdNote } = await createNote(value);    
+    allNotes.value.unshift(createdNote.data);    
   };
 
   // delete the note
@@ -101,7 +101,7 @@ export const useNotesStore = defineStore("notes", () => {
 
   // update the note
   const handleUpdateNote = async (val: Note) => {
-    const { data: updatedNote } = await updateNote(val.id, val);
+    const { data: updatedNote } = await updateNote(val.id, val);      
 
     const currentNote = allNotes.value.find(
       (item: Note) => item.id === val.id
@@ -110,6 +110,7 @@ export const useNotesStore = defineStore("notes", () => {
     currentNote.title = updatedNote.data.title;
     currentNote.note = updatedNote.data.note;
     currentNote.importance = updatedNote.data.importance;
+    
   };
 
   return {
@@ -122,6 +123,6 @@ export const useNotesStore = defineStore("notes", () => {
     setLang,
     radios,
     loading,
-    textAboveSet,
+    textAboveSet,    
   };
 });

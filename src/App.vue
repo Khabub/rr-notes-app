@@ -12,7 +12,7 @@
     </RouterView>
     <v-btn
       v-if="plusButton"
-      class="plusButton"
+      class="plus-button"
       icon="mdi-plus"
       color="blue"
       size="large"
@@ -44,14 +44,15 @@ const showEnterForm = () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../src/assets/globals";
+
 .side-menu-visible {
-  background-color: rgb(207, 207, 207);
+  background-color: $color-sideMenu;
   filter: blur(2px);
   opacity: 0.5;
   pointer-events: none;
-  transition: all 0.5s;
-  height: 100vh;
+  transition: all 0.5s;  
 }
 .side-menu-hidden {
   background-color: transparent;
@@ -59,7 +60,7 @@ const showEnterForm = () => {
   opacity: 1;
   transition: all 0.5s;
 }
-.plusButton {
+.plus-button {
   position: fixed;
   right: 30px;
   bottom: 30px;

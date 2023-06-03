@@ -129,53 +129,49 @@ onBeforeMount(() => {
   addEventListener("resize", handleResize);
 });
 
+// focus form
 onUpdated(() => {
   window.scrollTo({ top: 0 });
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/globals.scss";
 .container {
+  @include flexDJA(column);
   margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100vw;
+  .form {
+    width: 90vw;
+    max-width: 550px;
+    position: relative;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .very-important {
+    color: $color-importanceRed;
+  }
+  .important {
+    color: $color-importanceOrange;
+  }
+  .notso-important {
+    color: $color-importanceGreen;
+  }
+  .radio-group {
+    @include flexDJA();
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .cancel-cross {
+    position: absolute;
+    top: -44px;
+    right: 0px;
+    color: $color-cancelCross;
+  }
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.very-important {
-  color: red;
-}
-.important {
-  color: orange;
-}
-.notso-important {
-  color: green;
-}
-
-.radio-group {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-.form {
-  width: 90vw;
-  max-width: 550px;
-  position: relative;
-}
-
-.cancel-cross {
-  position: absolute;
-  top: -44px;
-  right: 0px;
-  color: red;
-}
 @media (min-width: 900px) {
   .cancel-cross:hover {
     cursor: pointer;

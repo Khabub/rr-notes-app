@@ -86,18 +86,18 @@ const handleNotePropsEdit = (data: NoteProps) => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+  @import "../assets/globals.scss";
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flexDJA(column);
   height: 100%;
+  
+  h1 {
+    text-align: center;
+  }
 }
-
 .headline {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flexDJA(column);
   margin-top: 3rem;
   line-height: 2rem;
   padding: 0.5rem;
@@ -105,36 +105,25 @@ const handleNotePropsEdit = (data: NoteProps) => {
 .without-heading {
   margin-top: 3.5rem;
 }
-
 .input-scroll-enter-from {
   transform: translateY(-350px);
-  height: 0;
-  opacity: 0;
+  @include opacityAndHeight (0, 0);  
 }
 .input-scroll-enter-active {
   transition: all 0.5s ease-in;
 }
 .input-scroll-enter-to {
-  opacity: 1;
-  height: 450px;
+  @include opacityAndHeight (1, 450px);
 }
-
 .input-scroll-leave-from {
-  opacity: 1;
-  height: 450px;
+  @include opacityAndHeight (1, 450px);
 }
-
 .input-scroll-leave-active {
   transition: all 0.5s ease-out;
 }
 .input-scroll-leave-to {
-  opacity: 0;
-  height: 0;
+  @include opacityAndHeight (0, 0);
   transform: translateY(-350px);
-}
-
-h1 {
-  text-align: center;
 }
 
 @media (min-width: 900px) {

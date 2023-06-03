@@ -7,11 +7,8 @@
     <div class="right-side-date">
       <span>{{ getTime(props.created_at as string) }}</span>
     </div>
-
     <h2 class="note-heading-h2 note-position">{{ props.title }}</h2>
-   
-      <p class="note-content note-position">{{ props.note }}</p>
-   
+    <p class="note-content note-position">{{ props.note }}</p>
   </div>
   <v-dialog v-model="noteDetailShow" max-width="380px">
     <NoteDetail
@@ -54,52 +51,48 @@ const emitHandle = (data: NoteProps) => {
 
 // modal detail note window show/hide
 const handleNoteDetailShow = () => {
-  noteDetailShow.value = !noteDetailShow.value; 
+  noteDetailShow.value = !noteDetailShow.value;
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/globals.scss";
 .container {
   position: relative;
   border: 2px solid;
   border-radius: 0.8rem;
   margin-bottom: 1rem;
-  box-shadow: 5px 5px 10px 5px grey;
-  
-}
+  box-shadow: 5px 5px 10px 5px $color-boxShadow; 
 
+  .note-heading-h2 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  .right-side-date {
+    font-size: 0.8rem;
+    position: absolute;
+    font-style: italic;
+    right: 10px;
+    bottom: 2px;
+  }
+  .note-content {
+    overflow: hidden;
+    font-size: 0.9rem;
+    margin: 0.2rem 0 1.5rem;
+  }
+}
 .note-position {
   width: 90vw;
   max-width: 350px;
   padding: 0 2rem 0 0.5rem;
 }
-
-.note-content {
-  overflow: hidden;
-  font-size: 0.9rem;
-  margin: 0.2rem 0 1.5rem;
-}
-
-.note-heading-h2 {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-}
-
-.right-side-date {
-  font-size: 0.8rem;
-  position: absolute;
-  font-style: italic;
-  right: 10px;
-  bottom: 2px;
-}
-
 .impRed {
-  border-color: red;
+  border-color: $color-importanceRed;
 }
 .impOrange {
-  border-color: orange;
+  border-color: $color-importanceOrange;
 }
 .impGreen {
-  border-color: green;
+  border-color: $color-importanceGreen;
 }
 </style>

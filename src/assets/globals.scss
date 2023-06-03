@@ -1,0 +1,24 @@
+// Colors
+$color-sideMenu: rgb(207, 207, 207);
+$color-loginWindow: rgb(240, 255, 255);
+$color-border: rgb(0,0,0);
+$color-boxShadow: rgb(128, 128, 128);
+$color-cancelCross: rgb(255, 0, 0);
+
+$color-importanceRed: rgb(204, 22, 22);
+$color-importanceOrange: rgb(255, 165, 0);
+$color-importanceGreen: rgb(0, 128, 0);
+
+
+// Mixins
+@mixin flexDJA($direction: row, $just: center, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: unquote($just);
+  align-items: unquote($align);
+}
+
+@mixin opacityAndHeight($opacity, $height){
+  opacity: $opacity;
+  height: $height;
+}

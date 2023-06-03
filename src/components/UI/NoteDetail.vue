@@ -22,7 +22,6 @@
         >{{ setLang.noteDetail.delete }}</v-btn
       >
     </div>
-
     <svg-icon
       class="cancel-cross"
       type="mdi"
@@ -31,25 +30,10 @@
     ></svg-icon>
 
     <v-dialog v-model="alertDialog">
-      <div class="alert-dialog">
-        {{ setLang.noteDetail.confirm }}
-        <div class="alert-buttons">
-          <v-btn
-            variant="elevated"
-            color="red"
-            size="small"
-            @click="handleAlertDelete"
-            >{{ setLang.noteDetail.confirm_btn }}</v-btn
-          >
-          <v-btn
-            variant="elevated"
-            color="blue"
-            size="small"
-            @click="alertDialog = false"
-            >{{ setLang.noteDetail.cancel }}</v-btn
-          >
-        </div>
-      </div>
+      <DeleteConfirm
+        @alert-dialog="handleAlertDelete"
+        @alert-set="alertDialog = false"
+      />
     </v-dialog>
   </div>
 </template>
@@ -65,17 +49,17 @@ import { useSnackbar } from "@/stores/snackbar";
 import { storeToRefs } from "pinia";
 import { reactive, ref } from "vue";
 import { importanceCheck } from "@/utils/importanceCheck";
+import DeleteConfirm from "@/components/UI/DeleteConfirm.vue";
 
 const closeIcon = mdiClose;
 const storeNotes = useNotesStore();
 const store = useAuthStore();
 const storeSnackbar = useSnackbar();
-const alertDialog = ref<boolean>(false);
-
 const { handleDeleteNote } = storeNotes;
 const { setLang } = storeToRefs(storeNotes);
 const { plusButton, showInputState } = storeToRefs(store);
 const { getSnackbar } = storeSnackbar;
+const alertDialog = ref<boolean>(false);
 
 // props from TheNote
 const props = defineProps({
@@ -95,13 +79,11 @@ const emit = defineEmits<{
   (event: "note-props", value: NoteProps): void;
 }>();
 
-
-
-const handleEdit = () => {  
+const handleEdit = () => {
   emit("cancel-crossEmit");
   emit("note-props", noteDetailsProps);
   showInputState.value.editNote = !showInputState.value.editNote;
-  plusButton.value = false;   
+  plusButton.value = false;
 };
 
 const handleAlertDelete = async () => {
@@ -111,87 +93,59 @@ const handleAlertDelete = async () => {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/globals.scss";
 .container {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flexDJA(column);
   border: 2px solid;
-  border-radius: 0.8rem;
-  box-shadow: 5px 5px 10px 5px grey;
-  background-color: white;
+  background-color: $color-loginWindow;
   padding: 0.3rem;
-}
+  border-radius: 0.8rem;
+  box-shadow: 5px 5px 10px 5px $color-boxShadow;
 
+  .note-content {
+    overflow: hidden;
+    font-size: 0.9rem;
+  }
+  .note-heading-h2 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  .right-side-date {
+    font-size: 0.8rem;
+    position: absolute;
+    font-style: italic;
+    right: 50%;
+    transform: translateX(50px);
+    bottom: 5px;
+  }
+  .cancel-cross {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    color: $color-cancelCross;
+  }
+  .edit-delete {
+    @include flexDJA(row, space-evenly);
+    width: 350px;
+    margin: 2rem 0;
+  }
+}
 .note-position {
   width: 90vw;
   max-width: 350px;
   padding: 0 1.5rem;
 }
 
-.note-content {
-  overflow: hidden;
-  font-size: 0.9rem;
-}
-
-.note-heading-h2 {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-}
-
-.right-side-date {
-  font-size: 0.8rem;
-  position: absolute;
-  font-style: italic;
-  right: 50%;
-  transform: translateX(50px);
-  bottom: 5px;
-}
-
 .impRed {
-  border-color: red;
+  border-color: $color-importanceRed;
 }
 .impOrange {
-  border-color: orange;
+  border-color: $color-importanceOrange;
 }
 .impGreen {
-  border-color: green;
-}
-.cancel-cross {
-  position: absolute;
-  top: 5px;
-  right: 6px;
-  color: red;
-}
-.edit-delete {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 350px;
-  margin: 2rem 0;
-}
-
-.alert-dialog {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  background-color: rgb(255, 255, 255);
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: 5px 5px 10px grey;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 250px;
-}
-.alert-buttons {
-  display: flex;
-  justify-content: space-around;
-  width: inherit;
+  border-color: $color-importanceGreen;
 }
 
 @media (min-width: 900px) {

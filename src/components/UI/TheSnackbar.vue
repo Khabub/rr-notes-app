@@ -15,6 +15,5 @@
 import { storeToRefs } from "pinia";
 import { useSnackbar } from "@/stores/snackbar";
 
-const storeSnackbar = useSnackbar();
-const { snackbar } = storeToRefs(storeSnackbar);
+const { snackbar } = storeToRefs(useSnackbar());
 </script>

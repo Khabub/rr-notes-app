@@ -14,7 +14,7 @@
         v-model="drawer"
         location="left"
         width="200"
-        ><TheContent />
+        ><TheContent @set-drawer="drawer = false" />
       </v-navigation-drawer>
     </div>
   </v-layout>
@@ -62,24 +62,22 @@ watch(drawer, (oldValue, newValue) => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../assets/globals.scss";
 .container {
+  @include flexDJA(row, space-between);
   position: fixed;
   top: 0;
   background-color: #9ef4ff;
   width: 100vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 40px;
   z-index: 900;
   padding: 0 1rem;
-}
 
-h3 {
-  font-size: 0.8rem;
+  h3 {
+    font-size: 0.8rem;
+  }
 }
-
 
 @media (min-width: 900px) {
   .menuIcon:hover {
