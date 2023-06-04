@@ -1,27 +1,26 @@
 <template>
-  <div>
-    <NavBar @sidemenu-open="(value) => (drawer = value)" />
+  <NavBar @sidemenu-open="(value) => (drawer = value)" />
+  <div :class="drawer ? 'side-menu-visible' : 'side-menu-hidden'">
     <RouterView
       v-slot="{ Component }"
-      :class="drawer ? 'side-menu-visible' : 'side-menu-hidden'"
       :showInputState="showInputState.enterNote"
     >
       <transition name="trans">
         <component :is="Component" />
       </transition>
     </RouterView>
-    <v-btn
-      v-if="plusButton"
-      class="plus-button"
-      icon="mdi-plus"
-      color="blue"
-      size="large"
-      style="font-size: 2rem"
-      @click="showEnterForm"
-      >+</v-btn
-    >
-    <TheSnackbar />
   </div>
+  <v-btn
+    v-if="plusButton"
+    class="plus-button"
+    icon="mdi-plus"
+    color="blue"
+    size="large"
+    style="font-size: 2rem"
+    @click="showEnterForm"
+    >+</v-btn
+  >
+  <TheSnackbar />
 </template>
 
 <script setup lang="ts">
@@ -52,7 +51,7 @@ const showEnterForm = () => {
   filter: blur(2px);
   opacity: 0.5;
   pointer-events: none;
-  transition: all 0.5s;  
+  transition: all 0.5s;
 }
 .side-menu-hidden {
   background-color: transparent;
